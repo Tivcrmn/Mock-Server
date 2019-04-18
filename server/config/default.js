@@ -10,8 +10,8 @@ module.exports = {
     port: 6379,
     db: 0
   },
-  // remote-db: 'mongodb://<dbuser>:<dbpassword>@ds253879.mlab.com:53879/mock-server'
-  db: 'mongodb://127.0.0.1/ms-db',
+  db: 'mongodb://<user>:<password>@ds253879.mlab.com:53879/mock-server',
+  // db: 'mongodb://127.0.0.1/ms-db',
   tokenName: 'access_token',
   tokenExpireSeconds: 60 * 60 // 24 * 60 * 60
 }
