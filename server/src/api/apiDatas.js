@@ -1,23 +1,17 @@
-import {
-  isEmpty,
-  each
-} from "lodash"
-import apiResult from "@/common/result"
-import TYPES from "@/api/TYPES"
-import apiUtil from "@/api/apiUtil"
+import apiResult from "@/common/result";
+import apiUtil from "@/api/apiUtil";
 
 export default data => {
-
-  let datas = []
+  let datas = [];
   for (let i = 0; i < data.repeat; i++) {
-    let field = {}
+    let field = {};
     for (let j = 0; j < data.fields.length; j++) {
-      field[data.fields[j].fieldName] = apiUtil.gen(data.fields[j].fieldType)
+      field[data.fields[j].fieldName] = apiUtil.gen(data.fields[j].fieldType);
     }
-    datas.push(field)
+    datas.push(field);
   }
-  return apiResult({data: datas})
-}
+  return apiResult({ data: datas });
+};
 
 /*
 url: {type: String}, // API地址

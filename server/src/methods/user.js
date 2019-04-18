@@ -1,7 +1,5 @@
-import uuid from "node-uuid"
-import config from "config"
-import _, {isFunction} from "lodash"
-import {User} from "@/models"
+import _, { isFunction } from "lodash";
+import { User } from "@/models";
 
 /**
  * 保存user
@@ -19,19 +17,19 @@ export const save = ({
   tenant = "",
   isTenantAdmin = false
 } = {}) => {
-  let user = new User()
-  user.loginName = loginName
-  user.password = password
-  user.tenant = tenant
-  user.isTenantAdmin = isTenantAdmin
+  let user = new User();
+  user.loginName = loginName;
+  user.password = password;
+  user.tenant = tenant;
+  user.isTenantAdmin = isTenantAdmin;
   // user.token = uuid.v4()
 
   return new Promise((resolve, reject) => {
     user.save((err, res) => {
-      err ? reject(err) : resolve(res)
-    })
-  })
-}
+      err ? reject(err) : resolve(res);
+    });
+  });
+};
 
 /**
  * get by user id
@@ -41,49 +39,48 @@ export const save = ({
  * @param {String} id
  * @param {Function} callback
  */
-export const getById = (id, callback) => User.findOne({_id: id}, callback)
+export const getById = (id, callback) => User.findOne({ _id: id }, callback);
 
-export const getByLoginName = (loginName) => User.findOne({loginName: loginName}).exec()
+export const getByLoginName = (loginName) => User.findOne({ loginName: loginName }).exec();
 
 /**
  * 获取所有符合条件的用户
  */
 export const getByQuery = (query = {}, opt) => {
   if (isFunction(opt)) {
-    callback = opt
-    opt = {}
+    opt = {};
   }
-  return User.find(query, "", opt).exec()
-}
+  return User.find(query, "", opt).exec();
+};
 
 export const update = (data, ex = {}) => {
-  return new Promise ((resolve, reject) => {
-    let query = {_id: data._id}
-    let a = _.omit(data, ["_id", "__v"])
+  return new Promise((resolve, reject) => {
+    let query = { _id: data._id };
+    let a = _.omit(data, ["_id", "__v"]);
     if (ex) {
-      a = ex
+      a = ex;
     }
-    a.updateTime = new Date()
+    a.updateTime = new Date();
     User.update(query, a, (err, res) => {
-      err ? reject(err) : resolve(res)  
-    })
-  })
-}
+      err ? reject(err) : resolve(res);
+    });
+  });
+};
 
 export const remove = (id) => {
-  return new Promise ((resolve, reject) => {
-    let query = {_id: id}
+  return new Promise((resolve, reject) => {
+    let query = { _id: id };
     User.remove(query, (err, res) => {
-      err ? reject(err) : resolve(res)
-    })
-  })
-}
+      err ? reject(err) : resolve(res);
+    });
+  });
+};
 
 export const disable = (id, disabled) => {
-  return new Promise ((resolve, reject) => {
-    let query = {_id: id}
-    User.update(query, {disabled: !disabled}, (err, res) => {
-      err ? reject(err) : resolve(res)
-    })
-  })
-}
+  return new Promise((resolve, reject) => {
+    let query = { _id: id };
+    User.update(query, { disabled: !disabled }, (err, res) => {
+      err ? reject(err) : resolve(res);
+    });
+  });
+};

@@ -56,19 +56,19 @@ export default {
       type: "string",
       random: true,
       leng: 100, // 长度
-      lang: "en", // cn/en
+      lang: "en" // cn/en
     },
     {
       name: "someKey2",
       type: "object",
       random: false,
-      data: "{"aa":111,"bb":22,"cc":33}"
+      data: "{aa: 111, bb: 22, cc: 33}"
     },
     {
       name: "someKey3",
       type: "array",
       random: false,
-      data: "["aa","bb","cc"]"
+      data: ["aa", "bb", "cc"]
     }
   ]
-}
+};

@@ -1,33 +1,33 @@
-import config from "config"
-import db from "@/common/redis"
+import config from "config";
+import db from "@/common/redis";
 
 export const set = obj => {
   return new Promise((resolve, reject) => {
-    if (typeof(b) !== "string") {
-      obj = JSON.stringify(obj)
+    if (typeof (b) !== "string") {
+      obj = JSON.stringify(obj);
     }
     db.set(obj, (err, res) => {
-      err ? reject(err) : resolve(res)
-    })
-  })
-}
+      err ? reject(err) : resolve(res);
+    });
+  });
+};
 
 export const get = key => {
   return new Promise((resolve, reject) => {
     db.get(key, (err, res) => {
       if (err) {
-        return reject(err)
+        return reject(err);
       }
-      let data = null
+      let data = null;
       try {
-        data = JSON.parse(res)
+        data = JSON.parse(res);
       } catch (e) {
-        data = res
+        data = res;
       }
-      resolve(data)
-    })
-  })
-}
+      resolve(data);
+    });
+  });
+};
 
 export const setToken = (token, obj) => {
   return new Promise((resolve, reject) => {
@@ -36,24 +36,24 @@ export const setToken = (token, obj) => {
       config.tokenExpireSeconds,
       JSON.stringify(obj),
       (err, res) => {
-        err ? reject(res) : resolve(res === "OK")
-    })
-  })
-}
+        err ? reject(res) : resolve(res === "OK");
+      });
+  });
+};
 
 export const getToken = token => {
   return new Promise((resolve, reject) => {
     db.get(`${config.tokenName}:${token}`, (err, res) => {
       if (err) {
-        return reject(err)
+        return reject(err);
       }
-      let data = null
+      let data = null;
       try {
-        data = JSON.parse(res)
+        data = JSON.parse(res);
       } catch (e) {
-        data = res
+        data = res;
       }
-      resolve(data)
-    })
-  })
-}
+      resolve(data);
+    });
+  });
+};

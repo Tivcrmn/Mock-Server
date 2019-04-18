@@ -1,19 +1,17 @@
-import {Router} from "express"
-import {isEqual} from "lodash"
-import apiResult from "@/common/result"
-import apiDatas from "@/api/apiDatas"
-import conext from "@/middlewares/conext"
-import names from "@/api/names"
-import {Api} from "@/methods"
+import { Router } from "express";
+import apiResult from "@/common/result";
+import apiDatas from "@/api/apiDatas";
+import conext from "@/middlewares/conext";
+import { Api } from "@/methods";
 
-const router = Router()
+const router = Router();
 
-const error = (res, code = 404, data = {error: "NOT_FOUND"}) => {
-  res.status(code).send(apiResult(data))
-}
+const error = (res, code = 404, data = { error: "NOT_FOUND" }) => {
+  res.status(code).send(apiResult(data));
+};
 
 /**
- * 现在支持的数据类型 
+ * 现在支持的数据类型
  * cn-name
  * age
  * cn-gende
@@ -21,7 +19,7 @@ const error = (res, code = 404, data = {error: "NOT_FOUND"}) => {
  * number
  * string
  * en-gende
- * mobile 
+ * mobile
  */
 router.all("/api/:tenant/:bucket/:version/*", conext(async (req, res) => {
   let opts = {
@@ -30,16 +28,16 @@ router.all("/api/:tenant/:bucket/:version/*", conext(async (req, res) => {
     version: req.params.version,
     url: req.params[0],
     method: req.method
-  }
-  let apiRes = await Api.getByQuery(opts)
+  };
+  let apiRes = await Api.getByQuery(opts);
   if (!apiRes.length) {
-    return error(res)
+    return error(res);
   }
   if (apiRes[0].disabled) {
-    return res.send(apiResult({error: "API_HAS_BEEN_DISABLED"}))  
+    return res.send(apiResult({ error: "API_HAS_BEEN_DISABLED" }));
   }
-  let fields = apiRes[0].fields
-  res.send(apiDatas({fields: fields, repeat: apiRes[0].repeat}))
+  let fields = apiRes[0].fields;
+  res.send(apiDatas({ fields: fields, repeat: apiRes[0].repeat }));
 
   /*
   res.send(apiResult({
@@ -51,6 +49,6 @@ router.all("/api/:tenant/:bucket/:version/*", conext(async (req, res) => {
     url: req.url
   }))
   */
-}))
+}));
 
-export default router
+export default router;
