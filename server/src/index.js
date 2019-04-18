@@ -8,6 +8,7 @@ import errorHandle from '@/middlewares/errorHandle'
 import reqLog from '@/common/runtime'
 import routers from '@/routers'
 import apiRouter from '@/api'
+import shelljs from 'shelljs'
 
 const app = express()
 const router = Router()
@@ -33,6 +34,9 @@ app.use(apiRouter)
 app.use(errorHandle)
 
 const port = config.port
+
+shelljs.exec(`lsof -n -i:${port} | grep LISTEN | awk '{ print $2 }' | uniq | xargs kill -9`)
+
 app.listen(port, e => {
   console.log("\nAPI server listening at ".green)
   console.log(("=> http://127.0.0.1:" + port).cyan + '\n')

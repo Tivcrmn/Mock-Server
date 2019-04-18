@@ -33,7 +33,8 @@
     "mongoose": "^4.11.9",
     "multer": "^1.3.0",
     "node-uuid": "^1.4.8",
-    "random-avatar": "^1.0.1"
+    "random-avatar": "^1.0.1",
+    "shelljs": "^0.8.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
