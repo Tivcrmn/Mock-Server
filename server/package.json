@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd node_modules; ln -sf ../src @",
-    "dev": "NODE_ENV=development PORT=5100 nodemon --exec babel-node src/index.js",
+    "dev": "NODE_ENV=development PORT=5000 && npm run lint && nodemon --exec babel-node src/index.js",
     "build": "rm -rf .lib && babel src -d .lib",
-    "start": "NODE_ENV=production PORT=5100 pm2 start .lib/index.js -i 0 --name ms",
+    "start": "NODE_ENV=production PORT=5000 pm2 start .lib/index.js -i 0 --name ms",
     "online": "npm run build && npm run start",
     "reload": "pm2 reload ms",
     "stop": "pm2 stop ms",
-    "delete": "pm2 stop ms && pm2 delete ms"
+    "delete": "pm2 stop ms && pm2 delete ms",
+    "lint": "eslint --ext .js src"
   },
   "author": "Tivcrmn <zhangjitao0405@gmail.com>",
   "license": "MIT",
@@ -39,6 +40,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^1.11.0"
   },
   "engines": {

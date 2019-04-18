@@ -1,7 +1,7 @@
-import uuid from 'node-uuid'
-import config from 'config'
-import _, {isFunction} from 'lodash'
-import {User} from '@/models'
+import uuid from "node-uuid"
+import config from "config"
+import _, {isFunction} from "lodash"
+import {User} from "@/models"
 
 /**
  * 保存user
@@ -14,9 +14,9 @@ import {User} from '@/models'
  * @param {Function} callback 回调函数
  */
 export const save = ({
-  loginName = '',
-  password = '',
-  tenant = '',
+  loginName = "",
+  password = "",
+  tenant = "",
   isTenantAdmin = false
 } = {}) => {
   let user = new User()
@@ -53,13 +53,13 @@ export const getByQuery = (query = {}, opt) => {
     callback = opt
     opt = {}
   }
-  return User.find(query, '', opt).exec()
+  return User.find(query, "", opt).exec()
 }
 
 export const update = (data, ex = {}) => {
   return new Promise ((resolve, reject) => {
     let query = {_id: data._id}
-    let a = _.omit(data, ['_id', '__v'])
+    let a = _.omit(data, ["_id", "__v"])
     if (ex) {
       a = ex
     }

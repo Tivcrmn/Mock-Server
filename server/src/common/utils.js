@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
+import bcrypt from "bcryptjs"
+import crypto from "crypto"
 
 export const validateId = str => {
   return (/^[a-zA-Z0-9\\u4E00-\u9FA5\-\._]+$/i).test(str)
@@ -24,11 +24,11 @@ export const bcompare = (str, hash, cb) => {
 export const generateToken = (salt = 32) => {
   return new Promise((resolve, reject) => {
     crypto.randomBytes(salt, function (err, buf) {
-      err ? reject(err) : resolve(buf.toString('hex'))
+      err ? reject(err) : resolve(buf.toString("hex"))
     })
   })
 }
 
 export const md5 = string => {
-    return crypto.createHash('md5').update(string).digest('hex')
+    return crypto.createHash("md5").update(string).digest("hex")
 }

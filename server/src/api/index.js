@@ -1,14 +1,14 @@
-import {Router} from 'express'
-import {isEqual} from 'lodash'
-import apiResult from '@/common/result'
-import apiDatas from '@/api/apiDatas'
-import conext from '@/middlewares/conext'
-import names from '@/api/names'
-import {Api} from '@/methods'
+import {Router} from "express"
+import {isEqual} from "lodash"
+import apiResult from "@/common/result"
+import apiDatas from "@/api/apiDatas"
+import conext from "@/middlewares/conext"
+import names from "@/api/names"
+import {Api} from "@/methods"
 
 const router = Router()
 
-const error = (res, code = 404, data = {error: 'NOT_FOUND'}) => {
+const error = (res, code = 404, data = {error: "NOT_FOUND"}) => {
   res.status(code).send(apiResult(data))
 }
 
@@ -23,7 +23,7 @@ const error = (res, code = 404, data = {error: 'NOT_FOUND'}) => {
  * en-gende
  * mobile 
  */
-router.all('/api/:tenant/:bucket/:version/*', conext(async (req, res) => {
+router.all("/api/:tenant/:bucket/:version/*", conext(async (req, res) => {
   let opts = {
     tenant: req.params.tenant,
     bucket: req.params.bucket,
@@ -36,14 +36,14 @@ router.all('/api/:tenant/:bucket/:version/*', conext(async (req, res) => {
     return error(res)
   }
   if (apiRes[0].disabled) {
-    return res.send(apiResult({error: 'API_HAS_BEEN_DISABLED'}))  
+    return res.send(apiResult({error: "API_HAS_BEEN_DISABLED"}))  
   }
   let fields = apiRes[0].fields
   res.send(apiDatas({fields: fields, repeat: apiRes[0].repeat}))
 
   /*
   res.send(apiResult({
-    source: 'api-server',
+    source: "api-server",
     params: req.params,
     method: req.method,
     tenant: req.params.tenant,

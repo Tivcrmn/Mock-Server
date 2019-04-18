@@ -1,7 +1,7 @@
-import uuid from 'node-uuid'
-import config from 'config'
-import {isFunction} from 'lodash'
-import {Bucket} from '@/models'
+import uuid from "node-uuid"
+import config from "config"
+import {isFunction} from "lodash"
+import {Bucket} from "@/models"
 
 /**
  * save tenant
@@ -42,7 +42,7 @@ export const getByQuery = (query, opt) => {
     callback = opt
     opt = {}
   }
-  return Bucket.find(query, '', opt).exec()
+  return Bucket.find(query, "", opt).exec()
 }
 
 export const remove = (id) => {

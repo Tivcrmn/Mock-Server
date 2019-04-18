@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Model from './model'
+import mongoose from "mongoose"
+import Model from "./model"
 
 const Schema = mongoose.Schema
 
@@ -20,4 +20,4 @@ const BucketSchema = new Schema({
 
 BucketSchema.plugin(Model)
 BucketSchema.index({name: 1})
-mongoose.model('Bucket', BucketSchema)
+mongoose.model("Bucket", BucketSchema)

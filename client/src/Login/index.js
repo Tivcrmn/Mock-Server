@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import history from '../plugins/history';
-import './index.css';
+import React, { Component } from "react";
+import history from "../plugins/history";
+import "./index.css";
 
 class Login extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      password: ''
+      userName: "",
+      password: ""
     }
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -17,7 +17,7 @@ class Login extends Component{
     let token = localStorage.getItem("token");
     if (token) {
       console.log("the token is in browser");
-      history.push('/');
+      history.push("/");
     }
   }
 
@@ -35,8 +35,8 @@ class Login extends Component{
 
   login() {
     let {userName, password} = this.state;
-    localStorage.setItem('token', `${userName} ${password}`);
-    history.push('/');
+    localStorage.setItem("token", `${userName} ${password}`);
+    history.push("/");
   }
 
   render() {

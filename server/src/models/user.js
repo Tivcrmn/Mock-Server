@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Model from './model'
+import mongoose from "mongoose"
+import Model from "./model"
 
 const Schema = mongoose.Schema
 
@@ -21,4 +21,4 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(Model)
 UserSchema.index({loginName: 1}, {unique: true})
-mongoose.model('User', UserSchema)
+mongoose.model("User", UserSchema)

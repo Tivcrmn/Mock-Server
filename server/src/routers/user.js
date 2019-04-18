@@ -1,12 +1,12 @@
-import apiResult from '@/common/result'
-import {bhash, bcompare, generateToken} from '@/common/utils'
-import _, {merge, assign} from 'lodash'
-import {User, Tenant} from '@/methods'
-import conext from '@/middlewares/conext'
-import {setToken} from '@/common/token'
-import API500px from '500px'
+import apiResult from "@/common/result"
+import {bhash, bcompare, generateToken} from "@/common/utils"
+import _, {merge, assign} from "lodash"
+import {User, Tenant} from "@/methods"
+import conext from "@/middlewares/conext"
+import {setToken} from "@/common/token"
+import API500px from "500px"
 
-const customerKey = 'GmMX5wZjlfXcSOfbL0j28iLqTMJb90tjLJz3ykgJ'
+const customerKey = "GmMX5wZjlfXcSOfbL0j28iLqTMJb90tjLJz3ykgJ"
 let api500px = new API500px(customerKey)
 
 /**
@@ -28,8 +28,8 @@ export const register = conext (async (req, res, next) => {
     // 校验租户
     let tenant = await Tenant.getByName(post.tenant)
     if (!tenant) {
-      console.log('aaa', post.tenant)
-      return res.send(apiResult({error: 'TENANT_DONT_EXISTS'}))
+      console.log("aaa", post.tenant)
+      return res.send(apiResult({error: "TENANT_DONT_EXISTS"}))
     }
     // 校验是否已经有用户在所在租户中
     opts = {
@@ -38,7 +38,7 @@ export const register = conext (async (req, res, next) => {
     }
     let user = await User.getByQuery(opts)
     if (user.length) {
-      return res.send(apiResult({error: 'USER_EXISTS'}))
+      return res.send(apiResult({error: "USER_EXISTS"}))
     }
     // 生成密码
     let passhash = await bhash(post.password)
@@ -53,7 +53,7 @@ export const register = conext (async (req, res, next) => {
     opts = {loginName: post.loginName}
     let user = await User.getByQuery(opts)
     if (user.length) {
-      return res.send(apiResult({error: 'USER_EXISTS'}))
+      return res.send(apiResult({error: "USER_EXISTS"}))
     }
     // 生成密码
     let passhash = await bhash(post.password)
@@ -74,15 +74,15 @@ export const login = conext(async (req, res, next) => {
   let user = await User.getByLoginName(post.loginName)
     .catch(err => res.send(apiResult({error: err})))
   if (!user) {
-    return res.send(apiResult({error: 'LOGIN_FAILED'}))
+    return res.send(apiResult({error: "LOGIN_FAILED"}))
   }
   if (user.disabled) {
-    return res.send(apiResult({error: 'USER_HAS_BEEN_DISABLED'}))
+    return res.send(apiResult({error: "USER_HAS_BEEN_DISABLED"}))
   }
   console.log(post.password, user.password)
   let compare = await bcompare(post.password, user.password)
   if (!compare) {
-    return res.send(apiResult({error: 'WRONG_PASSWORD'}))
+    return res.send(apiResult({error: "WRONG_PASSWORD"}))
   }
 
   let token = await generateToken()
@@ -95,7 +95,7 @@ export const login = conext(async (req, res, next) => {
     user: _user,
     token: token
   }} : {
-    error: 'CREATE_TOKEN_FAIL'
+    error: "CREATE_TOKEN_FAIL"
   }))
 })
 
@@ -123,15 +123,15 @@ export const list = conext(async (req, res) => {
 
 export const avatar = conext(async (req, res) => {
   api500px.photos.getPopular({
-    feature: 'popular',
-    // exclude: '8',
-    // only: 'City and Architecture,Travel,Nature', // Travel/Nature/Landscapes/Street/City and Architecture
-    image_size: '440, 1080, 2048',
-    sort: 'created_at',
-    rpp: '200'
+    feature: "popular",
+    // exclude: "8",
+    // only: "City and Architecture,Travel,Nature", // Travel/Nature/Landscapes/Street/City and Architecture
+    image_size: "440, 1080, 2048",
+    sort: "created_at",
+    rpp: "200"
   }, function (error, results) {
     if (error) {
-      console.log('err:', error)
+      console.log("err:", error)
       return;
     }
     res.send(results)
@@ -157,13 +157,13 @@ export const detail = conext(async (req, res) => {
 
 export const detailSave = conext (async (req, res) => {
   let post = req.body
-  let opts = {'loginName': post.loginName}
+  let opts = {"loginName": post.loginName}
   let oldUser = await User.getById(post._id)
   let newUser = await User.getByQuery(opts)
 
   // 校验用户
   if (newUser.length && newUser[0]._id.toString() != oldUser._id.toString()) {
-    return res.send(apiResult({error: 'USER_EXISTS'}))
+    return res.send(apiResult({error: "USER_EXISTS"}))
   } else {
     let a = await User.update(post, {loginName: post.loginName})
   }
@@ -220,7 +220,7 @@ export const disable = conext (async (req, res) => {
   let user = await User.getById(req.body.id)
   let tenant = await Tenant.getByName(user.tenant)
   if (tenant.disabled && user.disabled) {
-    return res.send(apiResult({error: 'TENANT_HAS_BEEN_DISABLED'}))
+    return res.send(apiResult({error: "TENANT_HAS_BEEN_DISABLED"}))
   }
   let r = await User.disable(req.body.id, user.disabled)
   if (r) {

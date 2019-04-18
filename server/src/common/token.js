@@ -1,9 +1,9 @@
-import config from 'config'
-import db from '@/common/redis'
+import config from "config"
+import db from "@/common/redis"
 
 export const set = obj => {
   return new Promise((resolve, reject) => {
-    if (typeof(b) !== 'string') {
+    if (typeof(b) !== "string") {
       obj = JSON.stringify(obj)
     }
     db.set(obj, (err, res) => {
@@ -36,7 +36,7 @@ export const setToken = (token, obj) => {
       config.tokenExpireSeconds,
       JSON.stringify(obj),
       (err, res) => {
-        err ? reject(res) : resolve(res === 'OK')
+        err ? reject(res) : resolve(res === "OK")
     })
   })
 }

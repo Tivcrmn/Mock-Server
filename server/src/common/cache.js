@@ -1,6 +1,6 @@
-import redis from './redis'
-import logger from './logger'
-import {noop} from 'lodash'
+import redis from "./redis"
+import logger from "./logger"
+import {noop} from "lodash"
 
 export const get = (key, callback) => {
   const = new Date()
@@ -19,7 +19,7 @@ export const get = (key, callback) => {
     }
 
     const duration = (new Date() - t)
-    logger.debug('Cache', 'get', key, (duration + 'ms').green)
+    logger.debug("Cache", "get", key, (duration + "ms").green)
     callback(null, data)
   })
 }
@@ -28,12 +28,12 @@ export const get = (key, callback) => {
 export const set = (key, value, time, callback) => {
   const = new Date()
 
-  if (typeof time === 'function') {
+  if (typeof time === "function") {
     callback = time
     time = null
   }
   callback = callback || noop
-  if (typeof value !== 'string') {
+  if (typeof value !== "string") {
     value = JSON.stringify(value)
   }
 
@@ -43,5 +43,5 @@ export const set = (key, value, time, callback) => {
     redis.setex(key, time, value, callback)
   }
   const duration = (new Date() - t)
-  logger.debug("Cache", "set", key, (duration + 'ms').green)
+  logger.debug("Cache", "set", key, (duration + "ms").green)
 }

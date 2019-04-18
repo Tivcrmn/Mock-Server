@@ -1,7 +1,7 @@
-import uuid from 'node-uuid'
-import config from 'config'
-import _, {isFunction} from 'lodash'
-import {Tenant} from '@/models'
+import uuid from "node-uuid"
+import config from "config"
+import _, {isFunction} from "lodash"
+import {Tenant} from "@/models"
 
 /**
  * save tenant
@@ -44,7 +44,7 @@ export const getByQuery = (query, opt) => {
     callback = opt
     opt = {}
   }
-  return Tenant.find(query, '', opt).exec()
+  return Tenant.find(query, "", opt).exec()
 }
 /**
  * update
@@ -53,7 +53,7 @@ export const getByQuery = (query, opt) => {
 export const update = (data) => {
   return new Promise ((resolve, reject) => {
     let query = {_id: data._id}
-    let a = _.omit(data, ['_id', '__v'])
+    let a = _.omit(data, ["_id", "__v"])
     a.updateTime = new Date()
     Tenant.update(query, a, (err, res) => {
       err ? reject(err) : resolve(res)

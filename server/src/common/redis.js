@@ -1,6 +1,6 @@
-import config from 'config'
-import Redis from 'ioredis'
-import logger from './logger'
+import config from "config"
+import Redis from "ioredis"
+import logger from "./logger"
 
 const client = new Redis({
     port: config.redis.port,
@@ -8,9 +8,9 @@ const client = new Redis({
     db: config.redis.db
 });
 
-client.on('error', err => {
+client.on("error", err => {
   if (err) {
-    logger.error('connect to redis error, check your redis config', err)
+    logger.error("connect to redis error, check your redis config", err)
     process.exit(1)
   }
 })

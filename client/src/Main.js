@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import './Main.css';
-import history from './plugins/history'
-import routes from './plugins/routes';
-import logo from './assets/logo.svg';
-import logout_logo from './assets/logout.svg';
+import "./Main.css";
+import history from "./plugins/history"
+import routes from "./plugins/routes";
+import logo from "./assets/logo.svg";
+import logout_logo from "./assets/logout.svg";
 
 class Main extends Component {
   logout() {

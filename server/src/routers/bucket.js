@@ -1,7 +1,7 @@
-import apiResult from '@/common/result'
-import {merge, assign} from 'lodash'
-import {Bucket, Api, Tenant} from '@/methods'
-import conext from '@/middlewares/conext'
+import apiResult from "@/common/result"
+import {merge, assign} from "lodash"
+import {Bucket, Api, Tenant} from "@/methods"
+import conext from "@/middlewares/conext"
 
 /**
  * 系统新建
@@ -14,7 +14,7 @@ export const create = conext(async (req, res, next) => {
   if (res.locals.user.isAdmin) {
     let tenant = await Tenant.getByName(req.body.tenant)
     if (!tenant) {
-      return res.send(apiResult({error: 'TENANT_DONT_EXISTS'}))
+      return res.send(apiResult({error: "TENANT_DONT_EXISTS"}))
     }
   }
   let post = {
@@ -28,7 +28,7 @@ export const create = conext(async (req, res, next) => {
   }
   let promise = await Bucket.getByQuery(opts)
   if (promise.length) {
-    return res.send(apiResult({error: 'BUCKET_EXISTS'}))
+    return res.send(apiResult({error: "BUCKET_EXISTS"}))
   }
   let r = await Bucket.save(post)
   if (r) {
@@ -79,7 +79,7 @@ export const deleteItem = conext (async (req, res) => {
       res.send(apiResult({data: r}))
     }
   } else {
-    res.send(apiResult({error: 'INVALID'}))
+    res.send(apiResult({error: "INVALID"}))
   }
 })
 
@@ -92,7 +92,7 @@ export const disable = conext (async (req, res) => {
   let bucket = await Bucket.getById(req.body.id)
   let tenant = await Tenant.getByName(bucket.tenant)
   if (tenant.disabled && bucket.disabled) {
-    return res.send({error: 'TEANAT_HAS_BEEN_DISABLED'})
+    return res.send({error: "TEANAT_HAS_BEEN_DISABLED"})
   }
   // 禁用api
   let apis = await Api.getByQuery({bucket: bucket.name})

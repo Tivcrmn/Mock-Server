@@ -1,8 +1,8 @@
-import uuid from 'node-uuid'
-import config from 'config'
-import _, {isFunction} from 'lodash'
-import {Api} from '@/models'
-import conext from '@/middlewares/conext'
+import uuid from "node-uuid"
+import config from "config"
+import _, {isFunction} from "lodash"
+import {Api} from "@/models"
+import conext from "@/middlewares/conext"
 
 
 export const save = (data) => {
@@ -40,7 +40,7 @@ export const getByQuery = (query, opt) => {
     callback = opt
     opt = {}
   }
-  return Api.find(query, '', opt).exec()
+  return Api.find(query, "", opt).exec()
 }
 
 export const remove = (id) => {
@@ -65,7 +65,7 @@ export const disable = (id, disabled) => {
 export const update = (data) => {
   return new Promise ((resolve, reject) => {
     let query = {_id: data._id}
-    let a = _.omit(data, ['_id', '__v'])
+    let a = _.omit(data, ["_id", "__v"])
     a.updateTime = new Date()
     Api.update(query, a, (err, res) => {
       err ? reject(err) : resolve(res)

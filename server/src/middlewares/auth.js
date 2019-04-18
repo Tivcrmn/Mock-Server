@@ -1,21 +1,21 @@
-import mongoose from 'mongoose'
-import config from 'config'
-import {get} from 'lodash'
-import apiResult from '@/common/result'
-import {getToken} from '@/common/token'
-import conext from '@/middlewares/conext'
-import {User} from '@/methods'
+import mongoose from "mongoose"
+import config from "config"
+import {get} from "lodash"
+import apiResult from "@/common/result"
+import {getToken} from "@/common/token"
+import conext from "@/middlewares/conext"
+import {User} from "@/methods"
 
-const UserModel  = mongoose.model('User')
+const UserModel  = mongoose.model("User")
 
 export const loginRequired = async (req, res) => {
   // 先获取authorization，如果不存在继续查找query token，最后查找cookie token
-  let bearer = req.headers['authorization']
-  let queryToken = req.query['access_token']
+  let bearer = req.headers["authorization"]
+  let queryToken = req.query["access_token"]
   let cookieToken = req.cookies[config.COOKIE.KEY_TOKEN]
   let bearerToken = queryToken || cookieToken
     ? queryToken || cookieToken
-    : bearer && bearer !== 'Bearer' ? bearer.replace('Bearer ', '') : null
+    : bearer && bearer !== "Bearer" ? bearer.replace("Bearer ", "") : null
 
   if (!bearerToken) {
     return false
@@ -34,7 +34,7 @@ export const LOGIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res)
   if (!premission) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED'
+      error: "ACCESS_DENIED"
     }))
   }
   next()
@@ -45,21 +45,21 @@ export const OWNER = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res)
   if (!premission) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED'
+      error: "ACCESS_DENIED"
     }))
   }
 
-  let userId = req.params['userId'] || req.query['userId'] || get(req, 'body.userId', null)
+  let userId = req.params["userId"] || req.query["userId"] || get(req, "body.userId", null)
   if (!userId) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED',
-      message: 'path, query or body params userId required'
+      error: "ACCESS_DENIED",
+      message: "path, query or body params userId required"
     }))
   }
   if (userId !== res.locals.user._id) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED',
-      message: 'owner resource'
+      error: "ACCESS_DENIED",
+      message: "owner resource"
     }))
   }
 
@@ -71,15 +71,15 @@ export const ADMIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res)
   if (!premission) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED'
+      error: "ACCESS_DENIED"
     }))
   }
 
   let user = res.locals.user
   if (!user.isAdmin) {
     return res.send(apiResult({
-      error: 'ADMIN_ACCESS_DENIED',
-      message: 'you are not administrator'
+      error: "ADMIN_ACCESS_DENIED",
+      message: "you are not administrator"
     }))
   }
 
@@ -91,15 +91,15 @@ export const TENANTADMIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res)
   if (!premission) {
     return res.send(apiResult({
-      error: 'ACCESS_DENIED'
+      error: "ACCESS_DENIED"
     }))
   }
 
   let user = res.locals.user
   if (!user.isAdmin && !user.isTenantAdmin) {
     return res.send(apiResult({
-      error: 'ADMIN_ACCESS_DENIED',
-      message: 'you are not an administrator or a tenant admin'
+      error: "ADMIN_ACCESS_DENIED",
+      message: "you are not an administrator or a tenant admin"
     }))
   }
 

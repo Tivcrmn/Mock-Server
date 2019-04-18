@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Model from './model'
+import mongoose from "mongoose"
+import Model from "./model"
 
 const Schema = mongoose.Schema
 
@@ -16,4 +16,4 @@ const TenantSchema = new Schema({
 
 TenantSchema.plugin(Model)
 TenantSchema.index({name: 1}, {unique: true})
-mongoose.model('Tenant', TenantSchema)
+mongoose.model("Tenant", TenantSchema)

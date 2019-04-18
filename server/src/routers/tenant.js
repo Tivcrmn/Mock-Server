@@ -1,8 +1,8 @@
-import apiResult from '@/common/result'
-import {diff} from '@/common/utils'
-import {merge, assign, cloneDeep, each} from 'lodash'
-import {Tenant, User, Bucket, Api} from '@/methods'
-import conext from '@/middlewares/conext'
+import apiResult from "@/common/result"
+import {diff} from "@/common/utils"
+import {merge, assign, cloneDeep, each} from "lodash"
+import {Tenant, User, Bucket, Api} from "@/methods"
+import conext from "@/middlewares/conext"
 
 /**
  * 租户新建
@@ -17,21 +17,21 @@ export const create = conext(async (req, res, next) => {
   // 校验租户
   let tenant = await Tenant.getByName(post.name)
   if (tenant) {
-    return res.send(apiResult({error: 'TENANT_EXISTS'}))
+    return res.send(apiResult({error: "TENANT_EXISTS"}))
   }
   // 校验管理员
   let user = await User.getByLoginName(post.adminName)
   if (user) {
     if ((user.isTenantAdmin && user.tenant) || user.tenant) {
       // 如果已经是管理员或者已经在其他租户中
-      return res.send(apiResult({error: 'USER_INVALID'}))
+      return res.send(apiResult({error: "USER_INVALID"}))
     } else {
       // 如果不是
       let s = await User.update(user, {tenant: post.name})
       post.adminId = user._id
     }
   } else {
-    return res.send(apiResult({error: 'USER_DONT_EXIST'}))
+    return res.send(apiResult({error: "USER_DONT_EXIST"}))
   }
   
   // 保存该租户
@@ -106,14 +106,14 @@ export const detailSave = conext (async (req, res) => {
     change = true
   } else if (newTenant._id != req.body._id){
     // 新名称存在
-    return res.send(apiResult({error: 'TENANT_EXISTS'}))
+    return res.send(apiResult({error: "TENANT_EXISTS"}))
   } else {}
 
   // 校验管理员
   let user = await User.getByLoginName(post.adminName)
   if (!user || (!change && user.tenant != oldTenant.name) || (change && user.tenant != post.name))  {
     // 新管理员不存在或者该管理员不在该租户内
-    return res.send(apiResult({error: 'USER_DONT_EXIST'}))
+    return res.send(apiResult({error: "USER_DONT_EXIST"}))
   } else if (oldTenant.adminName != post.adminName){
     // 修改管理员
     let a = await User.update(user, {isTenantAdmin: true})
@@ -121,7 +121,7 @@ export const detailSave = conext (async (req, res) => {
     let tenant = {_id: req.body._id, adminName: user.loginName, adminId: user._id}
     let c = await Tenant.update(tenant)
     res.send(apiResult({data: c}))
-  } else {res.send({data: 'success'})}
+  } else {res.send({data: "success"})}
 })
 
 
