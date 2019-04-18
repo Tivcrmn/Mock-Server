@@ -1,9 +1,3 @@
-.DS_Store
-legacy/client/config/local.js
-legacy/client/node_modules/
-legacy/server/node_modules/
-legacy/server/cheese.log
-
 # Editor directories and files
 .idea
 *.suo

@@ -1,0 +1,35 @@
+.login-page {
+  text-align: center;
+  padding-top: 200px;
+}
+
+.login-page > input {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 30px;
+  font-size: 15px;
+}
+
+.login-page > input + input {
+  margin-top: 10px;
+}
+
+.login-page > button {
+  width: 208px;
+  height: 30px;
+  background-color: #0081ff;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: white;
+  font: 15px "Nunito", sans-serif;
+}
+
+.login-page > button:hover {
+  cursor: pointer;
+}
+
+.login-page > p {
+  font-size: 20px;
+  margin-bottom: 10px;
+}

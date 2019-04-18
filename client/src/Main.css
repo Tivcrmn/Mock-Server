@@ -1,0 +1,69 @@
+.Main {
+  display: flex;
+}
+
+.Main-logo {
+  animation: Main-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@keyframes Main-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#navigation {
+  width: 250px;
+  margin-right: 10px;
+}
+
+#navigation img {
+  width: 100px;
+  height: 100px;
+  margin-left: 40px;
+  display: inline;
+}
+
+#navigation li {
+  font: 15px "Nunito", sans-serif;
+  list-style: none;
+  width: 100px;
+  height: 30px;
+  background-color: #99ccff;
+  border-radius: 5%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#navigation li:hover {
+  background-color: #3399ff;
+}
+
+#navigation li + li{
+  margin-top: 30px;
+}
+
+#navigation .link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.main {
+  flex: 1;
+}
+
+#navigation .logout {
+  width: 50px;
+  margin-left: 70px;
+}
+
+.logout:hover {
+  cursor: pointer;
+}
