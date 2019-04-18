@@ -3,7 +3,7 @@ import { bhash, bcompare, generateToken } from "@/common/utils";
 import _, { merge, assign } from "lodash";
 import { User, Tenant } from "@/methods";
 import conext from "@/middlewares/conext";
-import { setToken } from "@/common/token";
+// import { setToken } from "@/common/token";
 import API500px from "500px";
 
 const customerKey = "GmMX5wZjlfXcSOfbL0j28iLqTMJb90tjLJz3ykgJ";
