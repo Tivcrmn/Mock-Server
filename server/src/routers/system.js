@@ -64,7 +64,7 @@ export const list = conext(async (req, res) => {
  * res.locals.user._id
  */
 
-export const deleteItem = conext(async (req, res) => {
+export const del = conext(async (req, res) => {
   let id = req.body.id;
   let bucket = await Bucket.getById(id);
   if (res.locals.user.isAdmin || res.locals.user.isTenantAdmin || bucket.adminId === res.locals.user._id) {
@@ -82,32 +82,16 @@ export const deleteItem = conext(async (req, res) => {
   }
 });
 
-/**
- * 禁用系统
- * @param {String} id 系统id
- */
+export const info = conext(async (req, res) => {
+});
 
-export const disable = conext(async (req, res) => {
-  let bucket = await Bucket.getById(req.body.id);
-  let tenant = await Tenant.getByName(bucket.tenant);
-  if (tenant.disabled && bucket.disabled) {
-    return res.send({ error: "TEANAT_HAS_BEEN_DISABLED" });
-  }
-  // 禁用api
-  let apis = await Api.getByQuery({ bucket: bucket.name });
-  for (let i = 0; i < apis.length; i++) {
-    await Api.disable(apis[i]._id, apis[i].disabled);
-  }
-  // 禁用系统
-  let r = await Bucket.disable(req.body.id, bucket.disabled);
-  if (r) {
-    return res.send(apiResult({ data: r }));
-  }
+export const update = conext(async (req, res) => {
 });
 
 export default {
-  create,
   list,
-  deleteItem,
-  disable
+  info,
+  create,
+  update,
+  del
 };

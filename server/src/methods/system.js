@@ -1,5 +1,5 @@
 import { isFunction } from "lodash";
-import { Bucket } from "@/models";
+import { System } from "@/models";
 
 /**
  * save tenant
@@ -11,7 +11,7 @@ import { Bucket } from "@/models";
  * @param {Function} callback 回调
  */
 export const save = (data) => {
-  let bucket = new Bucket();
+  let bucket = new System();
   bucket.name = data.name;
   bucket.tenant = data.tenant;
   bucket.adminId = data.adminId;
@@ -28,9 +28,9 @@ export const save = (data) => {
  * @param {String} id
  * @param {Function} callback
  */
-export const getById = id => Bucket.findOne({ _id: id }).exec();
+export const getById = id => System.findOne({ _id: id }).exec();
 
-export const getByName = name => Bucket.findOne({ name: name }).exec();
+export const getByName = name => System.findOne({ name: name }).exec();
 
 /**
  * 获取所有符合条件的数据
@@ -39,13 +39,13 @@ export const getByQuery = (query, opt) => {
   if (isFunction(opt)) {
     opt = {};
   }
-  return Bucket.find(query, "", opt).exec();
+  return System.find(query, "", opt).exec();
 };
 
 export const remove = (id) => {
   return new Promise((resolve, reject) => {
     let query = { _id: id };
-    Bucket.remove(query, (err, res) => {
+    System.remove(query, (err, res) => {
       err ? reject(err) : resolve(res);
     });
   });
@@ -54,7 +54,7 @@ export const remove = (id) => {
 export const disable = (id, disabled) => {
   return new Promise((resolve, reject) => {
     let query = { _id: id };
-    Bucket.update(query, { disabled: !disabled }, (err, res) => {
+    System.update(query, { disabled: !disabled }, (err, res) => {
       err ? reject(err) : resolve(res);
     });
   });

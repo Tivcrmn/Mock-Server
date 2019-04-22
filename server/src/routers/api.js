@@ -1,5 +1,5 @@
 import apiResult from "@/common/result";
-import { Api, Bucket } from "@/methods";
+import { Api } from "@/methods";
 import conext from "@/middlewares/conext";
 
 /**
@@ -71,7 +71,7 @@ export const list = conext(async (req, res) => {
  * res.locals.user._id
  */
 
-export const deleteItem = conext(async (req, res) => {
+export const del = conext(async (req, res) => {
   let id = req.body.id;
   let api = await Api.getById(id);
   if (res.locals.user.isAdmin || res.locals.user.isTenantAdmin || res.locals.user._id === api.adminId) {
@@ -85,36 +85,11 @@ export const deleteItem = conext(async (req, res) => {
 });
 
 /**
- * 禁用api
- * @param {String} id api_id
- * res.locals.user.isAdmin
- * res.locals.user.isTenantAdmin
- * res.locals.user._id
- */
-
-export const disable = conext(async (req, res) => {
-  let id = req.body.id;
-  let api = await Api.getById(id);
-  let bucket = await Bucket.getByName(api.bucket);
-  if (res.locals.user.isAdmin || res.locals.user.isTenantAdmin || res.locals.user._id === api.adminId) {
-    if (bucket.disabled && api.disabled) {
-      return res.send({ error: "BUCKET_HAS_BEEN_DISABLED" });
-    }
-    let r = await Api.disable(id, api.disabled);
-    if (r) {
-      res.send(apiResult({ data: r }));
-    }
-  } else {
-    res.send(apiResult({ error: "INVALID" }));
-  };
-});
-
-/**
  * api详情
  * @param {String} id api_id
  */
 
-export const detail = conext(async (req, res) => {
+export const info = conext(async (req, res) => {
   let details = await Api.getById(req.query.id);
   res.send(apiResult({ data: details }));
 });
@@ -124,7 +99,7 @@ export const detail = conext(async (req, res) => {
  * @param (同创建)
  */
 
-export const detailSave = conext(async (req, res) => {
+export const update = conext(async (req, res) => {
   let post = req.body;
   let opts = {
     url: post.url,
@@ -143,10 +118,9 @@ export const detailSave = conext(async (req, res) => {
 });
 
 export default {
-  create,
   list,
-  deleteItem,
-  disable,
-  detail,
-  detailSave
+  info,
+  create,
+  update,
+  del
 };

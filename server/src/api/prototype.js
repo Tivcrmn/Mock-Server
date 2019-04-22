@@ -1,7 +1,6 @@
 // /api/{TENANT}/{VERSION}/user/list
 export default {
   url: "/api/v1/missile",
-  tenant: "dsdfs-sdfsd-sdsdf", // NewBanker
   bucket: "PE",
   adminId: "sdsdf-sdfsdf-sdfsd",
   method: "POST",

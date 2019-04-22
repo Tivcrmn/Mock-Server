@@ -62,7 +62,7 @@ export const OWNER = conext(async (req, res, next) => {
   next();
 });
 
-// 超级管理员权限
+// 管理员权限
 export const ADMIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res);
   if (!premission) {
@@ -76,26 +76,6 @@ export const ADMIN = conext(async (req, res, next) => {
     return res.send(apiResult({
       error: "ADMIN_ACCESS_DENIED",
       message: "you are not administrator"
-    }));
-  }
-
-  next();
-});
-
-// 租户管理员权限
-export const TENANTADMIN = conext(async (req, res, next) => {
-  let premission = await loginRequired(req, res);
-  if (!premission) {
-    return res.send(apiResult({
-      error: "ACCESS_DENIED"
-    }));
-  }
-
-  let user = res.locals.user;
-  if (!user.isAdmin && !user.isTenantAdmin) {
-    return res.send(apiResult({
-      error: "ADMIN_ACCESS_DENIED",
-      message: "you are not an administrator or a tenant admin"
     }));
   }
 

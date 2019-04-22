@@ -5,8 +5,7 @@ import bluebird from "bluebird";
 
 // models
 import "./user";
-import "./tenant";
-import "./bucket";
+import "./system";
 import "./api";
 
 mongoose.Promise = bluebird;
@@ -23,6 +22,5 @@ mongoose.connect(config.db, options)
   });
 
 export const User = mongoose.model("User");
-export const Tenant = mongoose.model("Tenant");
-export const Bucket = mongoose.model("Bucket");
+export const System = mongoose.model("System");
 export const Api = mongoose.model("Api");

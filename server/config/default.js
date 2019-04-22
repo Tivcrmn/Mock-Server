@@ -18,5 +18,5 @@ module.exports = {
   // local mongdb server
   // db: "mongodb://127.0.0.1/ms-db",
   tokenName: "access_token",
-  tokenExpireSeconds: 60 * 60 // 24 * 60 * 60
-}
+  tokenExpireSeconds: 60 * 60 // one hour
+};
