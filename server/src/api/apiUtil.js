@@ -1,9 +1,3 @@
-import cnNames from "@/api/names";
-
-export const genCnName = obj => {
-  return cnNames();
-};
-
 export const genAge = obj => {
   return Math.floor(Math.random() * 100);
 };
@@ -93,11 +87,8 @@ export const genBool = () => {
     return false;
   }
 };
-export const gen = type => {
-  if (type === "cn-name") {
-    return genCnName(type);
-  }
 
+export const gen = type => {
   if (type === "age") {
     return genAge(type);
   }

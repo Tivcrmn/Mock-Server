@@ -11,5 +11,5 @@ const SystemSchema = new Schema({
 });
 
 SystemSchema.plugin(Model);
-SystemSchema.index({ systemName: 1 });
+SystemSchema.index({ systemName: 1 }, { unique: true });
 mongoose.model("System", SystemSchema);

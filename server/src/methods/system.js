@@ -1,60 +1,39 @@
-import { isFunction } from "lodash";
+import { merge, omit } from "lodash";
 import { System } from "@/models";
 
-/**
- * save tenant
- * Callback
- * - err
- * - tenant
- * @param {String} name 租户名称
- * @param {String} adminId 创建人ID
- * @param {Function} callback 回调
- */
 export const save = (data) => {
-  let bucket = new System();
-  bucket.name = data.name;
-  bucket.tenant = data.tenant;
-  bucket.adminId = data.adminId;
-
+  let system = new System();
+  system = merge(system, data);
   return new Promise((resolve, reject) => {
-    bucket.save((err, res) => {
+    system.save((err, res) => {
       err ? reject(err) : resolve(res);
     });
   });
 };
 
-/**
- * get by id
- * @param {String} id
- * @param {Function} callback
- */
 export const getById = id => System.findOne({ _id: id }).exec();
 
-export const getByName = name => System.findOne({ name: name }).exec();
+export const getByName = systemName => System.findOne({ systemName }).exec();
 
-/**
- * 获取所有符合条件的数据
- */
 export const getByQuery = (query, opt) => {
-  if (isFunction(opt)) {
-    opt = {};
-  }
   return System.find(query, "", opt).exec();
+};
+
+export const update = system => {
+  return new Promise((resolve, reject) => {
+    let query = { _id: system._id };
+    let data = omit(system, ["_id", "__v"]);
+    data.updateTime = new Date();
+    System.update(query, data, (err, res) => {
+      err ? reject(err) : resolve(res);
+    });
+  });
 };
 
 export const remove = (id) => {
   return new Promise((resolve, reject) => {
     let query = { _id: id };
     System.remove(query, (err, res) => {
-      err ? reject(err) : resolve(res);
-    });
-  });
-};
-
-export const disable = (id, disabled) => {
-  return new Promise((resolve, reject) => {
-    let query = { _id: id };
-    System.update(query, { disabled: !disabled }, (err, res) => {
       err ? reject(err) : resolve(res);
     });
   });

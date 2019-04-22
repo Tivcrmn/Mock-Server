@@ -1,91 +1,38 @@
 import apiResult from "@/common/result";
-import { Bucket, Api, Tenant } from "@/methods";
+import { System } from "@/methods";
 import conext from "@/middlewares/conext";
 
-/**
- * 系统新建
- * @param {String} name 系统名称
- * res.locals.user.tenant
- * res.locals.user._id
- */
-
-export const create = conext(async (req, res, next) => {
-  if (res.locals.user.isAdmin) {
-    let tenant = await Tenant.getByName(req.body.tenant);
-    if (!tenant) {
-      return res.send(apiResult({ error: "TENANT_DONT_EXISTS" }));
-    }
-  }
-  let post = {
-    name: req.body.name,
-    tenant: res.locals.user.isAdmin ? req.body.tenant : res.locals.user.tenant,
-    adminId: res.locals.user._id
-  };
-  let opts = {
-    name: post.name,
-    tenant: post.tenant
-  };
-  let promise = await Bucket.getByQuery(opts);
-  if (promise.length) {
-    return res.send(apiResult({ error: "BUCKET_EXISTS" }));
-  }
-  let r = await Bucket.save(post);
-  if (r) {
-    return res.send(apiResult({ data: r }));
-  }
-});
-
-/**
- * 系统列表查询
- * res.locals.user.tenant
- * res.locals.user.isAdmin
- */
-
 export const list = conext(async (req, res) => {
-  let post = req.query;
-  let opts = {
-    tenant: res.locals.user.tenant
-  };
-  if (res.locals.user.isAdmin) {
-    opts = {};
-  }
-  if (post.name) {
-    opts.name = new RegExp(post.name);
-  }
-  let buckets = await Bucket.getByQuery(opts);
-  res.send(apiResult({ data: buckets }));
-});
-
-/**
- * 系统删除
- * @param {String} id 系统id
- * res.locals.user.isAdmin
- * res.locals.user.isTenantAdmin
- * res.locals.user._id
- */
-
-export const del = conext(async (req, res) => {
-  let id = req.body.id;
-  let bucket = await Bucket.getById(id);
-  if (res.locals.user.isAdmin || res.locals.user.isTenantAdmin || bucket.adminId === res.locals.user._id) {
-    // 可删除
-    let apis = await Api.getByQuery({ tenant: bucket.tenant, bucket: bucket.name });
-    for (let i = 0; i < apis.length; i++) {
-      await apis[i].remove(apis[i]._id);
-    }
-    let r = await Bucket.remove(id);
-    if (r) {
-      res.send(apiResult({ data: r }));
-    }
-  } else {
-    res.send(apiResult({ error: "INVALID" }));
-  }
+  let systems = await System.getByQuery({});
+  res.send(apiResult({ data: systems }));
 });
 
 export const info = conext(async (req, res) => {
+  let id = req.params.systemId;
+  let info = await System.getById(id);
+  res.send(apiResult({ data: info }));
+});
+
+export const create = conext(async (req, res, next) => {
+  let system = await System.getByName(req.body.systemName);
+  if (system) {
+    return res.send(apiResult({ error: "SYSTEM_EXISTS" }));
+  }
+  let newSystem = await System.save(req.body);
+  return res.send(apiResult({ data: newSystem }));
 });
 
 export const update = conext(async (req, res) => {
+  let system = req.body;
+  system._id = req.params.systemId;
+  let r = await System.update(system);
+  res.send(r ? apiResult({ data: r }) : apiResult({ error: "UPDATE_FAILED" }));
+});
+
+export const del = conext(async (req, res) => {
+  let id = req.params.systemId;
+  let r = await System.remove(id);
+  res.send(r ? apiResult({ data: r }) : apiResult({ error: "DELETE_FAILED" }));
 });
 
 export default {

@@ -10,7 +10,6 @@ const ApiSchema = new Schema({
   method: { type: String },
   query: { type: Array, default: [] },
   fields: { type: Array, default: [] },
-  apiResult: { type: Object, default: {} },
   version: { type: String, default: "v1" },
   createTime: { type: Date, default: Date.now },
   updateTime: { type: Date, default: Date.now },
@@ -18,5 +17,5 @@ const ApiSchema = new Schema({
 });
 
 ApiSchema.plugin(Model);
-ApiSchema.index({ url: 1 }, { unique: true });
+ApiSchema.index({ url: 1 });
 mongoose.model("Api", ApiSchema);

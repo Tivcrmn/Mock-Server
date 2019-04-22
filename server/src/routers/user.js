@@ -5,10 +5,6 @@ import { User } from "@/methods";
 import conext from "@/middlewares/conext";
 import { setToken } from "@/common/token";
 
-/**
- * @param {String} userName
- * @param {String} password
- */
 export const login = conext(async (req, res, next) => {
   let { userName, password } = req.body;
   let user = await User.getByUserName(userName);
@@ -32,10 +28,6 @@ export const login = conext(async (req, res, next) => {
   }));
 });
 
-/**
- * @param {String} userName
- * @param {String} password
- */
 export const create = conext(async (req, res, next) => {
   let { userName, password } = req.body;
   let user = await User.getByUserName(userName);
@@ -47,15 +39,13 @@ export const create = conext(async (req, res, next) => {
   return res.send(apiResult({ data: newUser }));
 });
 
-/**
- */
 export const list = conext(async (req, res) => {
   let users = await User.getByQuery({});
   res.send(apiResult({ data: users }));
 });
 
 /**
- * @param {String} id 用户id
+ * @param {String} userId
  */
 export const info = conext(async (req, res) => {
   let id = req.params.userId;
@@ -63,12 +53,9 @@ export const info = conext(async (req, res) => {
   res.send(apiResult({ data: info }));
 });
 
-/**
- * @param {Object} user
- */
-
 export const update = conext(async (req, res) => {
   let user = req.body;
+  user._id = req.params.userId;
   if (user.password) {
     let passhash = await bhash(user.password);
     user.password = passhash;
@@ -76,11 +63,6 @@ export const update = conext(async (req, res) => {
   let r = await User.update(user);
   res.send(r ? apiResult({ data: r }) : apiResult({ error: "UPDATE_FAILED" }));
 });
-
-/**
- * 用户删除
- * @param {String} id 用户id
- */
 
 export const del = conext(async (req, res) => {
   let id = req.params.userId;

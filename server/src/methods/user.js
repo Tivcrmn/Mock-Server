@@ -1,10 +1,6 @@
 import { omit, merge } from "lodash";
 import { User } from "@/models";
 
-/**
- * @param {String} userName 用户名
- * @param {String} password 激活码
- */
 export const save = newUser => {
   let user = new User();
   user = merge(user, newUser);
@@ -15,18 +11,10 @@ export const save = newUser => {
   });
 };
 
-/**
- * @param {String} id
- */
 export const getById = (id, callback) => User.findOne({ _id: id }, callback);
 
-/**
- * @param {String} userName
- */
 export const getByUserName = (userName) => User.findOne({ userName }).exec();
 
-/**
- */
 export const getByQuery = (query = {}, opt) => {
   return User.find(query, "", opt).exec();
 };

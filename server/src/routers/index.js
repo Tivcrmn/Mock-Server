@@ -32,14 +32,14 @@ router.delete("/user/:userId", LOGIN, user.del);
 // system
 router.get("/system", LOGIN, system.list);
 router.get("/system/:systemId", LOGIN, system.info);
-router.post("/system/:systemId", LOGIN, system.create);
+router.post("/system", LOGIN, system.create);
 router.put("/system/:systemId", LOGIN, system.update);
 router.delete("/system/:systemId", LOGIN, system.del);
 
 // api
 router.get("/system/:systemId/api", LOGIN, api.list);
 router.get("/system/:systemId/api/:apiId", LOGIN, api.info);
-router.post("/system/:systemId/api/:apiId", LOGIN, api.create);
+router.post("/system/:systemId/api", LOGIN, api.create);
 router.put("/system/:systemId/api/:apiId", LOGIN, api.update);
 router.delete("/system/:systemId/api/:apiId", LOGIN, api.del);
 
