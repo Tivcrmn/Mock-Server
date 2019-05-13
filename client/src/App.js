@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
 import Login from "./Login";
 import history from "./plugins/history";
-import { AuthRoute } from "./plugins/auth"
+import AuthRoute from "./plugins/auth"
 
 
 class App extends Component {

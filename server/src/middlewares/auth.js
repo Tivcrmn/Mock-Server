@@ -8,7 +8,7 @@ export const loginRequired = async (req, res) => {
   // 先获取authorization，如果不存在继续查找query token，最后查找cookie token
   let bearer = req.headers["authorization"];
   let queryToken = req.query["access_token"];
-  let cookieToken = req.cookies[config.COOKIE.KEY_TOKEN];
+  let cookieToken = null;
   let bearerToken = queryToken || cookieToken
     ? queryToken || cookieToken
     : bearer && bearer !== "Bearer" ? bearer.replace("Bearer ", "") : null;

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import apiResult from "@/common/result";
 import user from "./user";
 import system from "./system";
 import api from "./api";
@@ -12,18 +11,10 @@ router.all("*", (req, res, next) => {
   next();
 });
 
-router.get("/ping", (req, res) => {
-  res.send(apiResult({
-    source: "api-self-server",
-    params: req.params,
-    method: req.method,
-    url: req.url
-  }));
-});
-
 // user
 router.post("/login", user.login);
 router.post("/register", user.create);
+router.post("/auth", LOGIN, user.auth);
 router.get("/user", LOGIN, user.list);
 router.get("/user/:userId", LOGIN, user.info);
 router.put("/user/:userId", LOGIN, user.update);

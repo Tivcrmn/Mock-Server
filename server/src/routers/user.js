@@ -70,11 +70,16 @@ export const del = conext(async (req, res) => {
   res.send(r ? apiResult({ data: r }) : apiResult({ error: "DELETE_FAILED" }));
 });
 
+export const auth = conext(async (req, res) => {
+  res.send(apiResult({ data: "token valid" }));
+});
+
 export default {
   login,
   create,
   list,
   info,
   update,
-  del
+  del,
+  auth
 };
