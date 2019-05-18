@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import axios from "axios";
+import history from "./history";
+import API from "./axios";
 
 class AuthRoute extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class AuthRoute extends Component {
   componentWillMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      axios.post("http://127.0.0.1:5000/api-self/v1/auth", {}, {headers: {"Authorization": token}})
+      API.post("api-self/v1/auth", {}, {headers: {"Authorization": token}})
         .then(res => {
           if (res.data.success) {
             this.setState({
@@ -23,6 +24,8 @@ class AuthRoute extends Component {
             })
           } else {
             alert(res.data.error);
+            localStorage.removeItem("token");
+            history.push("/login");
           }
         })
     } else {

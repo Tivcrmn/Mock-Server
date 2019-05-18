@@ -3,7 +3,7 @@ import { bhash, bcompare, generateToken } from "@/common/utils";
 import { merge, assign } from "lodash";
 import { User } from "@/methods";
 import conext from "@/middlewares/conext";
-import { setToken } from "@/common/token";
+import { getToken, setToken } from "@/common/token";
 
 export const login = conext(async (req, res, next) => {
   let { userName, password } = req.body;
@@ -44,9 +44,6 @@ export const list = conext(async (req, res) => {
   res.send(apiResult({ data: users }));
 });
 
-/**
- * @param {String} userId
- */
 export const info = conext(async (req, res) => {
   let id = req.params.userId;
   let info = await User.getById(id);
@@ -71,7 +68,8 @@ export const del = conext(async (req, res) => {
 });
 
 export const auth = conext(async (req, res) => {
-  res.send(apiResult({ data: "token valid" }));
+  let r = await getToken(req.headers.authorization);
+  res.send(apiResult(r ? { data: "token valid" } : { error: "token invalid" }));
 });
 
 export default {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import history from "../plugins/history";
-import axios from "axios";
+import history from "plugins/history";
+import API from "plugins/axios";
 import "./index.css";
 
 class Login extends Component{
@@ -28,7 +28,7 @@ class Login extends Component{
   }
 
   login() {
-    axios.post("http://127.0.0.1:5000/api-self/v1/login", {...this.state})
+    API.post("api-self/v1/login", {...this.state})
       .then(res => {
         if (res.data.success) {
           localStorage.setItem("token", res.data.data.token);

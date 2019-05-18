@@ -1,4 +1,3 @@
-import config from "config";
 import { get } from "lodash";
 import apiResult from "@/common/result";
 import { getToken } from "@/common/token";

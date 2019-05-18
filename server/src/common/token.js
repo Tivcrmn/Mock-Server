@@ -3,7 +3,7 @@ import db from "@/common/redis";
 
 export const set = obj => {
   return new Promise((resolve, reject) => {
-    if (typeof (b) !== "string") {
+    if (typeof (obj) !== "string") {
       obj = JSON.stringify(obj);
     }
     db.set(obj, (err, res) => {
