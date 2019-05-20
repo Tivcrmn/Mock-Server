@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import history from "./history";
 import API from "./axios";
+import PropTypes from "prop-types";
 
 class AuthRoute extends Component {
   constructor(props) {
@@ -57,5 +58,9 @@ class AuthRoute extends Component {
     );
   }
 }
+
+AuthRoute.propTypes = {
+  component: PropTypes.any,
+};
 
 export default AuthRoute;

@@ -10,6 +10,7 @@ import moment from "moment";
 import Loading from "components/Loading";
 import { getList } from "store/actions/user";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class Members extends Component {
   constructor(props) {
@@ -18,8 +19,6 @@ class Members extends Component {
       members: [],
       listsLoading: true,
       listsError: false,
-      deleteLoading: true,
-      deleteError: false,
     };
   }
 
@@ -27,15 +26,6 @@ class Members extends Component {
 
   componentDidMount() {
     this.props.getList();
-  }
-
-  deleteItem(id) {
-    this.setState({
-      listsLoading: true,
-    }, () => {
-      this.props.del(id);
-      this.props.getList();
-    });
   }
 
   render() {
@@ -70,7 +60,7 @@ class Members extends Component {
                         <TableCell>{member.isAdmin + ""}</TableCell>
                         <TableCell>
                           <Button color="primary">detail</Button>
-                          <Button color="secondary" onClick={() => this.deleteItem(member._id)}>delete</Button>
+                          <Button color="secondary">delete</Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -82,6 +72,13 @@ class Members extends Component {
     );
   }
 }
+
+Members.propTypes = {
+  listsLoading: PropTypes.bool,
+  listsError: PropTypes.bool,
+  members: PropTypes.array,
+  getList: PropTypes.func,
+};
 
 const mapStateToProps = state => ({
   members: state.user.lists,

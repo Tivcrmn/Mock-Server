@@ -27,8 +27,6 @@
     "react/self-closing-comp": ["error", {
       "component": false,
       "html": false,
-    }],
-    # temporary #
-    "react/prop-types": 0
+    }]
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "mock-server",
+  "name": "ms-api",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -17,7 +17,6 @@
     "lint:fix": "eslint --ext .js src --fix",
     "kp": "lsof -n -iTCP:5000 -sTCP:LISTEN -n -l -P | grep 'LISTEN' | awk '{print $2}' | xargs kill -9"
   },
-  "author": "Tivcrmn <zhangjitao0405@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "500px": "^0.5.1",
