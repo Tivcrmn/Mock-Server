@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-class Systems extends Component{
+class Systems extends Component {
   render() {
-    return <h1>Systems</h1>
+    return <h1>Systems</h1>;
   }
 }
 

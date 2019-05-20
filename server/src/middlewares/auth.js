@@ -29,7 +29,7 @@ export const LOGIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res);
   if (!premission) {
     return res.send(apiResult({
-      error: "ACCESS_DENIED"
+      error: "ACCESS_DENIED",
     }));
   }
   next();
@@ -40,7 +40,7 @@ export const OWNER = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res);
   if (!premission) {
     return res.send(apiResult({
-      error: "ACCESS_DENIED"
+      error: "ACCESS_DENIED",
     }));
   }
 
@@ -48,13 +48,13 @@ export const OWNER = conext(async (req, res, next) => {
   if (!userId) {
     return res.send(apiResult({
       error: "ACCESS_DENIED",
-      message: "path, query or body params userId required"
+      message: "path, query or body params userId required",
     }));
   }
   if (userId !== res.locals.user._id) {
     return res.send(apiResult({
       error: "ACCESS_DENIED",
-      message: "owner resource"
+      message: "owner resource",
     }));
   }
 
@@ -66,7 +66,7 @@ export const ADMIN = conext(async (req, res, next) => {
   let premission = await loginRequired(req, res);
   if (!premission) {
     return res.send(apiResult({
-      error: "ACCESS_DENIED"
+      error: "ACCESS_DENIED",
     }));
   }
 
@@ -74,7 +74,7 @@ export const ADMIN = conext(async (req, res, next) => {
   if (!user.isAdmin) {
     return res.send(apiResult({
       error: "ADMIN_ACCESS_DENIED",
-      message: "you are not administrator"
+      message: "you are not administrator",
     }));
   }
 

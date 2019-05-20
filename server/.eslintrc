@@ -9,5 +9,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-multiple-empty-lines": ["error", {"max": 1}],
   }
 }

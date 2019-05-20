@@ -15,7 +15,7 @@ router.all("/api/:system/:version/*", conext(async (req, res) => {
     bucket: req.params.bucket,
     version: req.params.version,
     url: req.params[0],
-    method: req.method
+    method: req.method,
   };
   let apiRes = await Api.getByQuery(opts);
   if (!apiRes.length) {

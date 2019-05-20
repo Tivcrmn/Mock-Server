@@ -4,7 +4,7 @@ export default arg => {
     success: true,
     error: null,
     data: null,
-    code: 0
+    code: 0,
   };
   return merge(res, arg, arg.error ? { success: false } : {});
 };

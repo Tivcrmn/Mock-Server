@@ -8,30 +8,30 @@ class AuthRoute extends Component {
     super(props);
     this.state = {
       loading: true,
-      redirect: false
-    }
+      redirect: false,
+    };
   }
 
   componentWillMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      API.post("api-self/v1/auth", {}, {headers: {"Authorization": token}})
+      API.post("api-self/v1/auth", {}, { headers: { "Authorization": token } })
         .then(res => {
           if (res.data.success) {
             this.setState({
               loading: false,
-              redirect: true
-            })
+              redirect: true,
+            });
           } else {
             alert(res.data.error);
             localStorage.removeItem("token");
             history.push("/login");
           }
-        })
+        });
     } else {
       this.setState({
-        loading: false
-      })
+        loading: false,
+      });
     }
   }
 
@@ -48,7 +48,7 @@ class AuthRoute extends Component {
             <Redirect
               to={{
                 pathname: "/login",
-                state: { from: props.location }
+                state: { from: props.location },
               }}
             />
           )

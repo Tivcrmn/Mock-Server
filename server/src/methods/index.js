@@ -6,5 +6,5 @@ import * as Api from "./api";
 export {
   User,
   System,
-  Api
+  Api,
 };

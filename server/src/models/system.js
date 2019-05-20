@@ -7,7 +7,7 @@ const SystemSchema = new Schema({
   systemName: { type: String },
   adminId: { type: String },
   createTime: { type: Date, default: Date.now },
-  updateTime: { type: Date, default: Date.now }
+  updateTime: { type: Date, default: Date.now },
 });
 
 SystemSchema.plugin(Model);

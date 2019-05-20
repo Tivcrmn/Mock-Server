@@ -10,31 +10,31 @@ const routes = [
     exact: true,
     main: Dashboard,
     name: "Dashboard",
-    show: true
+    show: true,
   },
   {
     path: "/systems",
     main: Systems,
     name: "Systems",
-    show: true
+    show: true,
   },
   {
     path: "/members",
     main: Members,
     name: "Members",
-    show: true
+    show: true,
   },
   {
     path: "/profile",
     main: Profile,
     name: "Profile",
-    show: true
+    show: true,
   },
   {
     path: "*",
     main: F0F,
-    show: false
-  }
+    show: false,
+  },
 ];
 
 export default routes;

@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import history from "plugins/history"
+import history from "plugins/history";
 import routes from "plugins/routes";
 import logo from "assets/logo.svg";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 import "./index.css";
 
 class Layout extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+
   logout() {
     history.push("/login");
   }
@@ -16,7 +21,7 @@ class Layout extends Component {
       <div className="Main">
         <Router>
           <div id="navigation">
-            <img src={logo} className="Main-logo" alt="logo"/>
+            <img src={logo} className="Main-logo" alt="logo" />
             <ul>
               {
                 routes.filter(route => route.show).map((route, index) => (
@@ -29,7 +34,7 @@ class Layout extends Component {
               }
 
               <li>
-                <Button variant="contained" onClick={this.logout.bind(this)}>
+                <Button variant="contained" onClick={this.logout}>
                  Logout
                 </Button>
               </li>
@@ -39,18 +44,18 @@ class Layout extends Component {
             <Switch>
               {
                 routes.map((route, index) => (
-                <Route
-                  key={index}
-                  path={route.path}
-                  exact={route.exact}
-                  component={route.main}
-                />
-              ))}
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.main}
+                  />
+                ))}
             </Switch>
           </div>
         </Router>
       </div>
-    )
+    );
   }
 }
 

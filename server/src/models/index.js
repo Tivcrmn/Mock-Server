@@ -12,7 +12,7 @@ mongoose.Promise = bluebird;
 
 const options = {
   useMongoClient: true,
-  poolSize: 20
+  poolSize: 20,
 };
 mongoose.connect(config.db, options)
   .then(res => mongoose.connection)

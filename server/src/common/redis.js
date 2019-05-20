@@ -2,11 +2,7 @@ import config from "config";
 import Redis from "ioredis";
 import logger from "./logger";
 
-const client = new Redis({
-  port: config.redis.port,
-  host: config.redis.host,
-  db: config.redis.db
-});
+const client = new Redis({ ...config.redis });
 
 client.on("error", err => {
   if (err) {

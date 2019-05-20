@@ -42,7 +42,7 @@ export const genString = obj => {
 export const genMobile = obj => {
   let prefixArray = [
     "130", "131", "132", "133", "135",
-    "137", "138", "170", "187", "189"
+    "137", "138", "170", "187", "189",
   ];
   let mobile = prefixArray[parseInt(10 * Math.random())];
   for (let j = 0; j < 8; j++) {
@@ -56,12 +56,12 @@ export const genIdNumber = obj => {
   let coefficientArray = [
     "7", "9", "10", "5", "8", "4",
     "2", "1", "6", "3", "7", "9",
-    "10", "5", "8", "4", "2"
+    "10", "5", "8", "4", "2",
   ];
   // 校验码
   let lastNumberArray = [
     "1", "0", "X", "9", "8", "7",
-    "6", "5", "4", "3", "2"
+    "6", "5", "4", "3", "2",
   ];
   // 住址
   let address = "420101";
@@ -123,5 +123,5 @@ export const gen = type => {
 };
 
 export default {
-  gen
+  gen,
 };

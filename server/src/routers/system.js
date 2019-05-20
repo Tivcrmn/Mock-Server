@@ -40,5 +40,5 @@ export default {
   info,
   create,
   update,
-  del
+  del,
 };

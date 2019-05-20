@@ -6,14 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd node_modules; ln -sf ../src @",
-    "dev": "NODE_ENV=development PORT=5000 && npm run lint && nodemon --exec babel-node src/index.js",
+    "dev": "NODE_ENV=development PORT=5000 && npm run lint && npm run kp && nodemon --exec babel-node src/index.js",
     "build": "rm -rf .lib && babel src -d .lib",
     "start": "NODE_ENV=production PORT=5000 pm2 start .lib/index.js -i 0 --name ms",
     "online": "npm run build && npm run start",
     "reload": "pm2 reload ms",
     "stop": "pm2 stop ms",
     "delete": "pm2 stop ms && pm2 delete ms",
-    "lint": "eslint --ext .js src"
+    "lint": "eslint --ext .js src",
+    "lint:fix": "eslint --ext .js src --fix",
+    "kp": "lsof -n -iTCP:5000 -sTCP:LISTEN -n -l -P | grep 'LISTEN' | awk '{print $2}' | xargs kill -9"
   },
   "author": "Tivcrmn <zhangjitao0405@gmail.com>",
   "license": "MIT",
@@ -26,13 +28,11 @@
     "body-parser": "^1.17.2",
     "colors": "^1.1.2",
     "config": "^1.26.2",
-    "cookie-parser": "^1.4.3",
     "express": "^4.15.4",
     "ioredis": "^3.1.4",
     "log4js": "^4.1.0",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.9",
-    "shelljs": "^0.8.3"
+    "mongoose": "^4.11.9"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

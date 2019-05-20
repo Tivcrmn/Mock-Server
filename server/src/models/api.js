@@ -13,7 +13,7 @@ const ApiSchema = new Schema({
   version: { type: String, default: "v1" },
   createTime: { type: Date, default: Date.now },
   updateTime: { type: Date, default: Date.now },
-  repeat: { type: Number, default: 1 }
+  repeat: { type: Number, default: 1 },
 });
 
 ApiSchema.plugin(Model);

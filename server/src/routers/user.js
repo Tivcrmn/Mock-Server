@@ -22,9 +22,9 @@ export const login = conext(async (req, res, next) => {
   let r = await setToken(token, _user);
   return res.send(apiResult(r ? { data: {
     user: _user,
-    token: token
+    token: token,
   } } : {
-    error: "CREATE_TOKEN_FAIL"
+    error: "CREATE_TOKEN_FAIL",
   }));
 });
 
@@ -79,5 +79,5 @@ export default {
   info,
   update,
   del,
-  auth
+  auth,
 };

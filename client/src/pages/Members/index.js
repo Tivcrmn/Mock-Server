@@ -1,70 +1,92 @@
 import React, { Component } from "react";
-import API from "plugins/axios";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import moment from "moment";
 import Loading from "components/Loading";
+import { getList } from "store/actions/user";
+import { connect } from "react-redux";
 
-class Members extends Component{
-  state = {
-    members: [],
-    loading: true
+class Members extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      members: [],
+      listsLoading: true,
+      listsError: false,
+      deleteLoading: true,
+      deleteError: false,
+    };
   }
 
   momentFormat = time => moment(time).format("MMMM Do YYYY, h:mm:ss a")
 
   componentDidMount() {
-    API.get("api-self/v1/user")
-      .then(res => {
-        if (res.data.success) {
-          this.setState({
-            loading: false,
-            members: res.data.data
-          })
-        } else {
-          alert(res.data.error);
-        }
-      })
+    this.props.getList();
   }
+
+  deleteItem(id) {
+    this.setState({
+      listsLoading: true,
+    }, () => {
+      this.props.del(id);
+      this.props.getList();
+    });
+  }
+
   render() {
-    const {loading, members} = this.state;
+    const { listsLoading, listsError, members } = this.props;
     return (
       <div>
         <h1>Members</h1>
         {
-          loading ? <Loading /> :
-          <Paper>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>UserName</TableCell>
-                  <TableCell>createTime</TableCell>
-                  <TableCell>updateTime</TableCell>
-                  <TableCell>isAdmin</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {members.map(member => (
-                  <TableRow key={member._id}>
-                    <TableCell component="th" scope="row">
-                      {member.userName}
-                    </TableCell>
-                    <TableCell>{this.momentFormat(member.createTime)}</TableCell>
-                    <TableCell>{this.momentFormat(member.updateTime)}</TableCell>
-                    <TableCell>{member.isAdmin + ""}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
+          listsLoading ? <Loading />
+            : listsError ? <div>{listsError}</div>
+              : <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>UserName</TableCell>
+                      <TableCell>createTime</TableCell>
+                      <TableCell>updateTime</TableCell>
+                      <TableCell>isAdmin</TableCell>
+                      <TableCell>
+                        <Button color="primary">add member</Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {members.map(member => (
+                      <TableRow key={member._id}>
+                        <TableCell component="th" scope="row">
+                          {member.userName}
+                        </TableCell>
+                        <TableCell>{this.momentFormat(member.createTime)}</TableCell>
+                        <TableCell>{this.momentFormat(member.updateTime)}</TableCell>
+                        <TableCell>{member.isAdmin + ""}</TableCell>
+                        <TableCell>
+                          <Button color="primary">detail</Button>
+                          <Button color="secondary" onClick={() => this.deleteItem(member._id)}>delete</Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Paper>
         }
       </div>
-    )
+    );
   }
 }
 
-export default Members;
+const mapStateToProps = state => ({
+  members: state.user.lists,
+  listsLoading: state.user.listsLoading,
+  listsError: state.user.listsError,
+});
+
+export default connect(mapStateToProps, { getList })(Members);

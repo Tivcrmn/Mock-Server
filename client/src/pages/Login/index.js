@@ -3,13 +3,13 @@ import history from "plugins/history";
 import API from "plugins/axios";
 import "./index.css";
 
-class Login extends Component{
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
-      password: ""
-    }
+      password: "",
+    };
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.login = this.login.bind(this);
@@ -17,18 +17,18 @@ class Login extends Component{
 
   handleUserNameChange(e) {
     this.setState({
-      userName: e.target.value
-    })
+      userName: e.target.value,
+    });
   }
 
   handlePasswordChange(e) {
     this.setState({
-      password: e.target.value
-    })
+      password: e.target.value,
+    });
   }
 
   login() {
-    API.post("api-self/v1/login", {...this.state})
+    API.post("api-self/v1/login", { ...this.state })
       .then(res => {
         if (res.data.success) {
           localStorage.setItem("token", res.data.data.token);
@@ -36,7 +36,7 @@ class Login extends Component{
         } else {
           alert(res.data.error);
         }
-      })
+      });
   }
 
   render() {
@@ -47,7 +47,7 @@ class Login extends Component{
         <input type="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
         <button type="button" onClick={this.login}>Login</button>
       </div>
-    )
+    );
   }
 }
 

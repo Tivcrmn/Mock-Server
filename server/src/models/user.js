@@ -8,7 +8,7 @@ const UserSchema = new Schema({
   password: { type: String },
   isAdmin: { type: Boolean, default: false },
   createTime: { type: Date, default: Date.now },
-  updateTime: { type: Date, default: Date.now }
+  updateTime: { type: Date, default: Date.now },
 });
 
 UserSchema.plugin(Model);

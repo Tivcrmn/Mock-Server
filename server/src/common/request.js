@@ -5,7 +5,7 @@ import axios from "axios";
 
 let headers = {};
 headers = {
-  "Authorization": "Bearer xxx"
+  "Authorization": "Bearer xxx",
 };
 const instance = axios.create({ headers });
 
