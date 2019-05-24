@@ -3,6 +3,7 @@ import axios from "plugins/axios";
 // action-types
 const USER_LIST = "USER_LIST";
 const USER_ADD = "USER_ADD";
+const USER_DELETE = "USER_DELETE";
 
 // state
 const initialState = {
@@ -33,6 +34,21 @@ export const addUser = (user) => dispatch => new Promise((resolve, reject) => {
     url: "api-self/v1/register",
     data,
     success(res) {
+      dispatch({ type: USER_DELETE });
+      resolve(res);
+    },
+    fail(err) {
+      reject(err);
+    },
+  });
+});
+
+export const deleteUser = (id) => dispatch => new Promise((resolve, reject) => {
+  axios({
+    dispatch,
+    method: "delete",
+    url: `api-self/v1/user/${id}`,
+    success(res) {
       dispatch({ type: USER_ADD });
       resolve(res);
     },
@@ -51,6 +67,7 @@ const user = (state = initialState, action) => {
       lists: action.lists,
     };
   case USER_ADD:
+  case USER_DELETE:
   default:
     return state;
   }

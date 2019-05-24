@@ -11,11 +11,11 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
 import moment from "moment";
-import { getUsers, getUserList, addUser } from "store/user";
+import { getUsers, getUserList, addUser, deleteUser } from "store/user";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import history from "plugins/history";
 
 class Users extends Component {
   constructor(props) {
@@ -45,6 +45,25 @@ class Users extends Component {
   handleClose = (e) => {
     this.setState({
       open: false,
+    });
+  }
+
+  goUserdetail = (id) => {
+    // TODO: bug. did not go to the detail page
+    console.log(id);
+    history.push(`/user/${id}`);
+  }
+
+  deleteUser = (id) => {
+    const { deleteUser, getUserList } = this.props;
+    deleteUser(id).then(res => {
+      // TODO: using message component
+      if (res.success) {
+        alert("delete user successful");
+        getUserList();
+      } else {
+        alert("delete user failed");
+      }
     });
   }
 
@@ -97,8 +116,8 @@ class Users extends Component {
                   <TableCell>{this.momentFormat(user.updateTime)}</TableCell>
                   <TableCell>{user.isAdmin + ""}</TableCell>
                   <TableCell>
-                    <Button color="primary">detail</Button>
-                    <Button color="secondary">delete</Button>
+                    <Button color="primary" onClick={() => this.goUserdetail(user._id)}>detail</Button>
+                    <Button color="secondary" onClick={() => this.deleteUser(user._id)}>delete</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -142,6 +161,7 @@ class Users extends Component {
 Users.propTypes = {
   getUserList: PropTypes.func,
   addUser: PropTypes.func,
+  deleteUser: PropTypes.func,
   users: PropTypes.array,
 };
 
@@ -149,4 +169,4 @@ const mapStateToProps = state => ({
   users: getUsers(state),
 });
 
-export default connect(mapStateToProps, { getUserList, addUser })(Users);
+export default connect(mapStateToProps, { getUserList, addUser, deleteUser })(Users);

@@ -1,5 +1,6 @@
 import Dashboard from "pages/Dashboard";
 import User from "pages/Users";
+import UserDetail from "pages/Users/detail";
 import Profile from "pages/Profile";
 import Systems from "pages/Systems";
 import F0F from "pages/F0F";
@@ -21,8 +22,14 @@ const routes = [
   {
     path: "/user",
     main: User,
+    exact: true,
     name: "Users",
     show: true,
+  },
+  {
+    path: "/user/:id",
+    main: UserDetail,
+    show: false,
   },
   {
     path: "/profile",
