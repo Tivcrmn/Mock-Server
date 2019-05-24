@@ -7,12 +7,7 @@ import Button from "@material-ui/core/Button";
 import "./index.css";
 
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.logout = this.logout.bind(this);
-  }
-
-  logout() {
+  logout = () => {
     history.push("/login");
   }
 

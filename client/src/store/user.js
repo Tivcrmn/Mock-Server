@@ -2,6 +2,7 @@ import axios from "plugins/axios";
 
 // action-types
 const USER_LIST = "USER_LIST";
+const USER_ADD = "USER_ADD";
 
 // state
 const initialState = {
@@ -24,6 +25,23 @@ export const getUserList = () => dispatch => new Promise((resolve, reject) => {
   });
 });
 
+export const addUser = (user) => dispatch => new Promise((resolve, reject) => {
+  const data = Object.assign({}, user);
+  axios({
+    dispatch,
+    method: "post",
+    url: "api-self/v1/register",
+    data,
+    success(res) {
+      dispatch({ type: USER_ADD });
+      resolve(res);
+    },
+    fail(err) {
+      reject(err);
+    },
+  });
+});
+
 // reducer
 const user = (state = initialState, action) => {
   switch (action.type) {
@@ -32,6 +50,7 @@ const user = (state = initialState, action) => {
       ...state,
       lists: action.lists,
     };
+  case USER_ADD:
   default:
     return state;
   }

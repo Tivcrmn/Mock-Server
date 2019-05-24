@@ -12,16 +12,15 @@ class Login extends Component {
       userName: "",
       password: "",
     };
-    this.handlInputChange = this.handlInputChange.bind(this);
   }
 
-  handlInputChange(e) {
+  handlInputChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   }
 
-  _login(state) {
+  _login = (state) => {
     const { login } = this.props;
     login(state).then(r => {
       history.push("/");
