@@ -1,14 +1,26 @@
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import rootReducer from "./reducers";
+import { createLogger } from "redux-logger";
+import user from "./user";
+import auth from "./auth";
 
-const initialState = {};
+const rootReducer = combineReducers({
+  user,
+  auth,
+});
 
 const middlewares = [thunk];
 
+const logger = createLogger({
+  collapsed: (getState, action, logEntry) => !logEntry.error,
+});
+
+if (process.env.NODE_ENV === "development") {
+  middlewares.push(logger);
+}
+
 const store = createStore(
   rootReducer,
-  initialState,
   compose(
     applyMiddleware(...middlewares),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

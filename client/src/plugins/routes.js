@@ -1,5 +1,5 @@
 import Dashboard from "pages/Dashboard";
-import Members from "pages/Members";
+import User from "pages/Users";
 import Profile from "pages/Profile";
 import Systems from "pages/Systems";
 import F0F from "pages/F0F";
@@ -19,9 +19,9 @@ const routes = [
     show: true,
   },
   {
-    path: "/members",
-    main: Members,
-    name: "Members",
+    path: "/user",
+    main: User,
+    name: "Users",
     show: true,
   },
   {

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "store/auth";
 import history from "plugins/history";
-import API from "plugins/axios";
 import "./index.css";
 
 class Login extends Component {
@@ -10,45 +12,36 @@ class Login extends Component {
       userName: "",
       password: "",
     };
-    this.handleUserNameChange = this.handleUserNameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.login = this.login.bind(this);
+    this.handlInputChange = this.handlInputChange.bind(this);
   }
 
-  handleUserNameChange(e) {
+  handlInputChange(e) {
     this.setState({
-      userName: e.target.value,
+      [e.target.name]: e.target.value,
     });
   }
 
-  handlePasswordChange(e) {
-    this.setState({
-      password: e.target.value,
+  _login(state) {
+    const { login } = this.props;
+    login(state).then(r => {
+      history.push("/");
     });
-  }
-
-  login() {
-    API.post("api-self/v1/login", { ...this.state })
-      .then(res => {
-        if (res.data.success) {
-          localStorage.setItem("token", res.data.data.token);
-          history.push("/");
-        } else {
-          alert(res.data.error);
-        }
-      });
   }
 
   render() {
     return (
       <div className="login-page">
         <p>Mock Server</p>
-        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange}></input>
-        <input type="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
-        <button type="button" onClick={this.login}>Login</button>
+        <input type="text" value={this.state.userName} name="userName" onChange={this.handlInputChange}></input>
+        <input type="password" value={this.state.password} name="password" onChange={this.handlInputChange}></input>
+        <button type="button" onClick={() => this._login(this.state)}>Login</button>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func,
+};
+
+export default connect(null, { login })(Login);

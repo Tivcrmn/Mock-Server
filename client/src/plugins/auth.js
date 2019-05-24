@@ -1,49 +1,41 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import history from "./history";
-import API from "./axios";
+import { tokenAuth, getRedirect } from "store/auth";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class AuthRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      redirect: false,
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      API.post("api-self/v1/auth", {}, { headers: { "Authorization": token } })
-        .then(res => {
-          if (res.data.success) {
-            this.setState({
-              loading: false,
-              redirect: true,
-            });
-          } else {
-            alert(res.data.error);
-            localStorage.removeItem("token");
-            history.push("/login");
-          }
+      const { tokenAuth } = this.props;
+      tokenAuth(token).then(r => {
+        this.setState({
+          loading: false,
         });
-    } else {
-      this.setState({
-        loading: false,
       });
+    } else {
+      history.push("/login");
     }
   }
 
   render() {
-    const { component: Component, ...rest } = this.props;
-    if (this.state.loading) return <h1>loading...</h1>;
+    const { loading } = this.state;
+    const { redirect, component: Component, ...rest } = this.props;
+    if (loading) return <h1>loading</h1>;
     return (
       <Route
         {...rest}
         render={props =>
-          this.state.redirect ? (
+          redirect ? (
             <Component {...props} />
           ) : (
             <Redirect
@@ -61,6 +53,13 @@ class AuthRoute extends Component {
 
 AuthRoute.propTypes = {
   component: PropTypes.any,
+  tokenAuth: PropTypes.func,
+  redirect: PropTypes.bool,
+  getDoShowLoading: PropTypes.func,
 };
 
-export default AuthRoute;
+const mapStateToProps = state => ({
+  redirect: getRedirect(state),
+});
+
+export default connect(mapStateToProps, { tokenAuth })(AuthRoute);
