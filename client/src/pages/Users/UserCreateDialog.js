@@ -14,7 +14,6 @@ class UserCreateDialog extends Component {
         <DialogTitle id="form-dialog-title">Add User</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
             margin="dense"
             label="Username"
             name="userName"
@@ -23,7 +22,6 @@ class UserCreateDialog extends Component {
             fullWidth
           />
           <TextField
-            autoFocus
             margin="dense"
             label="Password"
             name="password"

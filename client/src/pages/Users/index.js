@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
 import { getUsers, getUserList, addUser, deleteUser } from "store/user";
+import { showAlert } from "store/alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import history from "plugins/history";
@@ -52,28 +53,32 @@ class Users extends Component {
   }
 
   async deleteUser(id) {
-    const { deleteUser, getUserList } = this.props;
+    const { deleteUser, getUserList, showAlert } = this.props;
     let res = await deleteUser(id);
-    // TODO: using message component
     if (res.success) {
-      alert("delete user successful");
+      showAlert("delete user successfully");
       getUserList();
     } else {
-      alert("delete user failed");
+      showAlert("delete user failed");
     }
   }
 
   async submit(e) {
-    const { addUser, getUserList } = this.props;
+    const { addUser, getUserList, showAlert } = this.props;
     // const { username, password } = this.state;
     // TODO: need to validate the username and password
     let res = await addUser(this.state.user);
-    // TODO: using message component
+    this.setState({
+      user: {
+        userName: "",
+        password: "",
+      },
+    });
     if (res.success) {
-      alert("add user successful");
+      showAlert("add user successful");
       getUserList();
     } else {
-      alert("add user failed");
+      showAlert("add user failed");
     }
     this.handleClose();
   }
@@ -138,10 +143,11 @@ Users.propTypes = {
   addUser: PropTypes.func,
   deleteUser: PropTypes.func,
   users: PropTypes.array,
+  showAlert: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   users: getUsers(state),
 });
 
-export default connect(mapStateToProps, { getUserList, addUser, deleteUser })(Users);
+export default connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert })(Users);

@@ -7,7 +7,7 @@ const async = ({ dispatch, url, method, data, headers, success, fail }) => {
       method,
       url,
       data,
-      baseURL: "http://127.0.0.1:5000/",
+      baseURL: "http://35.236.62.175:5000/",
       headers: { ...headers, "Content-Type": "application/json" },
     };
   }

@@ -3,10 +3,12 @@ import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import user from "./user";
 import auth from "./auth";
+import alert from "./alert";
 
 const rootReducer = combineReducers({
   user,
   auth,
+  alert,
 });
 
 const middlewares = [thunk];
