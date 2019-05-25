@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "store/auth";
 import history from "plugins/history";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import "./index.css";
 
 class Login extends Component {
@@ -30,10 +32,34 @@ class Login extends Component {
   render() {
     return (
       <div className="login-page">
-        <p>Mock Server</p>
-        <input type="text" value={this.state.userName} name="userName" onChange={this.handlInputChange}></input>
-        <input type="password" value={this.state.password} name="password" onChange={this.handlInputChange}></input>
-        <button type="button" onClick={() => this._login(this.state)}>Login</button>
+        <h2>Mock Server</h2>
+        <div>
+          <TextField
+            label="userName"
+            value={this.state.userName}
+            name="userName"
+            style={{ width: 200 }}
+            onChange={this.handlInputChange}
+          />
+        </div>
+        <div>
+          <TextField
+            label="password"
+            value={this.state.password}
+            name="password"
+            type="password"
+            style={{ width: 200 }}
+            onChange={this.handlInputChange}
+          />
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this._login(this.state)}
+          style={{ width: 200, marginTop: 10 }}
+        >
+          Login
+        </Button>
       </div>
     );
   }
