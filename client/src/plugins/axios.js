@@ -12,13 +12,15 @@ const async = ({ dispatch, url, method, data, headers, success, fail }) => {
     };
   }
   axios(reqObj).then(res => {
-    const r = res.data;
-    if (r.success) {
-      success && success(r);
+    const response = res.data;
+    if (response.success) {
+      success && success(response);
     } else {
-      fail && fail(r);
+      fail && fail(response);
     }
   }).catch(() => {
+    // TODO: use a message dialog
+    alert("server error");
   });
 };
 

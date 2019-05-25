@@ -1,6 +1,6 @@
 import Dashboard from "pages/Dashboard";
 import User from "pages/Users";
-import UserDetail from "pages/Users/detail";
+import UserDetail from "pages/Users/Detail";
 import Profile from "pages/Profile";
 import Systems from "pages/Systems";
 import F0F from "pages/F0F";

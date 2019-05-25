@@ -1,4 +1,5 @@
 import axios from "plugins/axios";
+import { cloneDeep } from "lodash";
 
 // action-types
 const USER_LIST = "USER_LIST";
@@ -21,13 +22,13 @@ export const getUserList = () => dispatch => new Promise((resolve, reject) => {
       resolve(res);
     },
     fail(err) {
-      reject(err);
+      resolve(err);
     },
   });
 });
 
 export const addUser = (user) => dispatch => new Promise((resolve, reject) => {
-  const data = Object.assign({}, user);
+  const data = cloneDeep(user);
   axios({
     dispatch,
     method: "post",
@@ -38,7 +39,7 @@ export const addUser = (user) => dispatch => new Promise((resolve, reject) => {
       resolve(res);
     },
     fail(err) {
-      reject(err);
+      resolve(err);
     },
   });
 });
@@ -53,7 +54,7 @@ export const deleteUser = (id) => dispatch => new Promise((resolve, reject) => {
       resolve(res);
     },
     fail(err) {
-      reject(err);
+      resolve(err);
     },
   });
 });

@@ -6,16 +6,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import moment from "moment";
 import { getUsers, getUserList, addUser, deleteUser } from "store/user";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import history from "plugins/history";
+import UserCreateDialog from "./UserCreateDialog";
+import { cloneDeep } from "lodash";
 
 class Users extends Component {
   constructor(props) {
@@ -49,42 +46,41 @@ class Users extends Component {
   }
 
   goUserdetail = (id) => {
-    // TODO: bug. did not go to the detail page
-    console.log(id);
+    // TODO: bug. did not go to the detail page and need to refresh the page
+    console.log(`go to user and is ${id}`);
     history.push(`/user/${id}`);
   }
 
-  deleteUser = (id) => {
+  async deleteUser(id) {
     const { deleteUser, getUserList } = this.props;
-    deleteUser(id).then(res => {
-      // TODO: using message component
-      if (res.success) {
-        alert("delete user successful");
-        getUserList();
-      } else {
-        alert("delete user failed");
-      }
-    });
+    let res = await deleteUser(id);
+    // TODO: using message component
+    if (res.success) {
+      alert("delete user successful");
+      getUserList();
+    } else {
+      alert("delete user failed");
+    }
   }
 
-  submit = (e) => {
+  async submit(e) {
     const { addUser, getUserList } = this.props;
     // const { username, password } = this.state;
     // TODO: need to validate the username and password
-    addUser(this.state.user).then(res => {
-      // TODO: using message component
-      if (res.success) {
-        alert("add user successful");
-        getUserList();
-      } else {
-        alert("add user failed");
-      }
-    });
+    let res = await addUser(this.state.user);
+    // TODO: using message component
+    if (res.success) {
+      alert("add user successful");
+      getUserList();
+    } else {
+      alert("add user failed");
+    }
     this.handleClose();
   }
 
   handleInputChange = (e) => {
-    let user = Object.assign({}, this.state.user, { [e.target.name]: e.target.value });
+    let user = cloneDeep(this.state.user);
+    user[e.target.name] = e.target.value;
     this.setState({ user });
   }
 
@@ -124,35 +120,14 @@ class Users extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add User</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Username"
-              name="userName"
-              onChange={this.handleInputChange}
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Password"
-              name="password"
-              onChange={this.handleInputChange}
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.submit} color="primary">
-              Submit
-            </Button>
-          </DialogActions>
-        </Dialog>
+
+        <UserCreateDialog
+          data={this.state.user}
+          open={this.state.open}
+          handleClose={this.handleClose}
+          handleInputChange={this.handleInputChange}
+          submit={() => this.submit()}
+        />
       </div>
     );
   }

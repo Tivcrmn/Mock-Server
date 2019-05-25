@@ -13,14 +13,13 @@ class AuthRoute extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const token = localStorage.getItem("token");
     if (token) {
       const { tokenAuth } = this.props;
-      tokenAuth(token).then(r => {
-        this.setState({
-          loading: false,
-        });
+      await tokenAuth(token);
+      this.setState({
+        loading: false,
       });
     } else {
       history.push("/login");

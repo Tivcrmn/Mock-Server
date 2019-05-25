@@ -21,10 +21,10 @@ export const login = (data) => dispatch => new Promise((resolve, reject) => {
       const { token } = res.data;
       localStorage.setItem("token", token);
       dispatch({ type: USER_LOGIN, token });
-      resolve(token);
+      resolve(res);
     },
     fail(err) {
-      reject(err);
+      resolve(err);
     },
   });
 });
@@ -42,7 +42,7 @@ export const tokenAuth = (token) => dispatch => new Promise((resolve, reject) =>
     fail(err) {
       dispatch({ type: USER_AUTH, redirect: false });
       localStorage.removeItem("token");
-      reject(err);
+      resolve(err);
     },
   });
 });
