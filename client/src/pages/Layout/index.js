@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import history from "plugins/history";
+import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-router-dom";
 import routes from "plugins/routes";
 import logo from "assets/logo.svg";
 import Button from "@material-ui/core/Button";
@@ -9,7 +8,7 @@ import Alert from "components/Alert";
 
 class Layout extends Component {
   logout = () => {
-    history.push("/login");
+    this.props.history.push("/login");
   }
 
   render() {
@@ -56,4 +55,4 @@ class Layout extends Component {
   }
 }
 
-export default Layout;
+export default withRouter(Layout);

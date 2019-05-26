@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
-import history from "./history";
+import { Route, Redirect, withRouter } from "react-router-dom";
 import { tokenAuth, getRedirect } from "store/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -23,7 +22,7 @@ class AuthRoute extends Component {
         loading: false,
       });
     } else {
-      history.push("/login");
+      this.props.history.push("/login");
     }
   }
 
@@ -62,4 +61,4 @@ const mapStateToProps = state => ({
   redirect: getRedirect(state),
 });
 
-export default connect(mapStateToProps, { tokenAuth })(AuthRoute);
+export default withRouter(connect(mapStateToProps, { tokenAuth })(AuthRoute));

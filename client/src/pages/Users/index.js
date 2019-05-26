@@ -11,9 +11,9 @@ import { getUsers, getUserList, addUser, deleteUser } from "store/user";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import history from "plugins/history";
 import UserCreateDialog from "./UserCreateDialog";
 import { cloneDeep } from "lodash";
+import { withRouter } from "react-router-dom";
 
 class Users extends Component {
   constructor(props) {
@@ -47,9 +47,7 @@ class Users extends Component {
   }
 
   goUserdetail = (id) => {
-    // TODO: bug. did not go to the detail page and need to refresh the page
-    console.log(`go to user and is ${id}`);
-    history.push(`/user/${id}`);
+    this.props.history.push(`/user/${id}`);
   }
 
   async deleteUser(id) {
@@ -150,4 +148,4 @@ const mapStateToProps = state => ({
   users: getUsers(state),
 });
 
-export default connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert })(Users);
+export default withRouter(connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert })(Users));

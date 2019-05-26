@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "store/auth";
-import history from "plugins/history";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { withRouter } from "react-router-dom";
 import "./index.css";
 
 class Login extends Component {
@@ -22,11 +22,14 @@ class Login extends Component {
     });
   }
 
-  _login = (state) => {
+  async _login(state) {
     const { login } = this.props;
-    login(state).then(r => {
-      history.push("/");
-    });
+    let res = await login(state);
+    if (res.success) {
+      this.props.history.push("/");
+    } else {
+      alert("login failed");
+    }
   }
 
   render() {
@@ -69,4 +72,4 @@ Login.propTypes = {
   login: PropTypes.func,
 };
 
-export default connect(null, { login })(Login);
+export default withRouter(connect(null, { login })(Login));
