@@ -4,6 +4,7 @@ import history from "./history";
 import { tokenAuth, getRedirect } from "store/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Loading from "components/Loading";
 
 class AuthRoute extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class AuthRoute extends Component {
   render() {
     const { loading } = this.state;
     const { redirect, component: Component, ...rest } = this.props;
-    if (loading) return <h1>loading</h1>;
+    if (loading) return <Loading />;
     return (
       <Route
         {...rest}
