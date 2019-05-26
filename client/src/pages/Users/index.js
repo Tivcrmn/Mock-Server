@@ -7,7 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
-import { getUsers, getUserList, addUser, deleteUser } from "store/user";
+import { getUsers, getUserList, addUser, deleteUser, updateUser } from "store/user";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -21,6 +21,7 @@ class Users extends Component {
     super(props);
     this.state = {
       openCreateDialog: false,
+      type: "create",
       openDeleteDialog: false,
       deleteId: "",
       user: {
@@ -37,15 +38,23 @@ class Users extends Component {
     getUserList();
   }
 
-  handleCreateClickOpen = () => {
+  handleCreateClickOpen = (type, user) => {
+    if (!user) user = cloneDeep(this.state.user);
+    user.password = "";
     this.setState({
       openCreateDialog: true,
+      type,
+      user,
     });
   }
 
   handleCreateClickClose = () => {
     this.setState({
       openCreateDialog: false,
+      user: {
+        userName: "",
+        password: "",
+      },
     });
   }
 
@@ -83,21 +92,20 @@ class Users extends Component {
   }
 
   async submit(e) {
-    const { addUser, getUserList, showAlert } = this.props;
+    const { addUser, updateUser, getUserList, showAlert } = this.props;
     // const { username, password } = this.state;
     // TODO: need to validate the username and password
-    let res = await addUser(this.state.user);
-    this.setState({
-      user: {
-        userName: "",
-        password: "",
-      },
-    });
+    let res = null;
+    if (this.state.type === "create") {
+      res = await addUser(this.state.user);
+    } else {
+      res = await updateUser(this.state.user);
+    }
     if (res.success) {
-      showAlert("add user successful");
+      showAlert(`${this.state.type} user successful`);
       getUserList();
     } else {
-      showAlert("add user failed");
+      showAlert(`${this.state.type} user failed`);
     }
     this.handleCreateClickClose();
   }
@@ -121,8 +129,8 @@ class Users extends Component {
                 <TableCell>createTime</TableCell>
                 <TableCell>updateTime</TableCell>
                 <TableCell>isAdmin</TableCell>
-                <TableCell>
-                  <Button color="primary" onClick={this.handleCreateClickOpen}>add user</Button>
+                <TableCell align="center">
+                  <Button color="primary" onClick={() => this.handleCreateClickOpen("create")}>add user</Button>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -136,6 +144,7 @@ class Users extends Component {
                   <TableCell>{this.momentFormat(user.updateTime)}</TableCell>
                   <TableCell>{user.isAdmin + ""}</TableCell>
                   <TableCell>
+                    <Button color="default" onClick={() => this.handleCreateClickOpen("edit", user)}>edit</Button>
                     <Button color="primary" onClick={() => this.goUserdetail(user._id)}>detail</Button>
                     <Button color="secondary" onClick={() => this.handleDeleteClickOpen(user._id)}>delete</Button>
                   </TableCell>
@@ -146,6 +155,7 @@ class Users extends Component {
         </Paper>
 
         <CreateDialog
+          type={this.state.type}
           data={this.state.user}
           open={this.state.openCreateDialog}
           handleClose={this.handleCreateClickClose}
@@ -170,10 +180,11 @@ Users.propTypes = {
   deleteUser: PropTypes.func,
   users: PropTypes.array,
   showAlert: PropTypes.func,
+  updateUser: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   users: getUsers(state),
 });
 
-export default withRouter(connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert })(Users));
+export default withRouter(connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert, updateUser })(Users));

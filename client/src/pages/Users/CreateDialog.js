@@ -10,8 +10,8 @@ class UserCreateDialog extends Component {
   render() {
     const { open, data, handleClose, submit, handleInputChange } = this.props;
     return (
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add User</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"

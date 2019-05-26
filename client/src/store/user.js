@@ -5,6 +5,7 @@ import { cloneDeep } from "lodash";
 const USER_LIST = "USER_LIST";
 const USER_ADD = "USER_ADD";
 const USER_DELETE = "USER_DELETE";
+const USER_EDIT = "USER_EDIT";
 
 // state
 const initialState = {
@@ -59,6 +60,23 @@ export const deleteUser = (id) => dispatch => new Promise((resolve, reject) => {
   });
 });
 
+export const updateUser = (user) => dispatch => new Promise((resolve, reject) => {
+  const data = cloneDeep(user);
+  axios({
+    dispatch,
+    method: "put",
+    url: `api-self/v1/user/${user._id}`,
+    data,
+    success(res) {
+      dispatch({ type: USER_EDIT });
+      resolve(res);
+    },
+    fail(err) {
+      resolve(err);
+    },
+  });
+});
+
 // reducer
 const user = (state = initialState, action) => {
   switch (action.type) {
@@ -69,6 +87,7 @@ const user = (state = initialState, action) => {
     };
   case USER_ADD:
   case USER_DELETE:
+  case USER_EDIT:
   default:
     return state;
   }
