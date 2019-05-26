@@ -6,10 +6,12 @@ const USER_LIST = "USER_LIST";
 const USER_ADD = "USER_ADD";
 const USER_DELETE = "USER_DELETE";
 const USER_EDIT = "USER_EDIT";
+const USER_INFO = "USER_INFO";
 
 // state
 const initialState = {
   lists: [],
+  user: {},
 };
 
 // action
@@ -77,6 +79,21 @@ export const updateUser = (user) => dispatch => new Promise((resolve, reject) =>
   });
 });
 
+export const getUserInfo = (id) => dispatch => new Promise((resolve, reject) => {
+  axios({
+    dispatch,
+    method: "get",
+    url: `api-self/v1/user/${id}`,
+    success(res) {
+      dispatch({ type: USER_INFO, user: res.data });
+      resolve(res);
+    },
+    fail(err) {
+      resolve(err);
+    },
+  });
+});
+
 // reducer
 const user = (state = initialState, action) => {
   switch (action.type) {
@@ -84,6 +101,11 @@ const user = (state = initialState, action) => {
     return {
       ...state,
       lists: action.lists,
+    };
+  case USER_INFO:
+    return {
+      ...state,
+      user: action.user,
     };
   case USER_ADD:
   case USER_DELETE:
@@ -97,3 +119,4 @@ export default user;
 
 // selector
 export const getUsers = state => state.user.lists;
+export const getUser = state => state.user.user;
