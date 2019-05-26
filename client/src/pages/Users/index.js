@@ -11,7 +11,8 @@ import { getUsers, getUserList, addUser, deleteUser } from "store/user";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import UserCreateDialog from "./UserCreateDialog";
+import CreateDialog from "./CreateDialog";
+import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
 import { withRouter } from "react-router-dom";
 
@@ -19,7 +20,9 @@ class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      openCreateDialog: false,
+      openDeleteDialog: false,
+      deleteId: "",
       user: {
         userName: "",
         password: "",
@@ -34,15 +37,29 @@ class Users extends Component {
     getUserList();
   }
 
-  handleClickOpen = () => {
+  handleCreateClickOpen = () => {
     this.setState({
-      open: true,
+      openCreateDialog: true,
     });
   }
 
-  handleClose = (e) => {
+  handleCreateClickClose = () => {
     this.setState({
-      open: false,
+      openCreateDialog: false,
+    });
+  }
+
+  handleDeleteClickOpen = (id) => {
+    this.setState({
+      openDeleteDialog: true,
+      deleteId: id,
+    });
+  }
+
+  handleDeleteClickClose = () => {
+    this.setState({
+      openDeleteDialog: false,
+      deleteId: "",
     });
   }
 
@@ -52,6 +69,10 @@ class Users extends Component {
 
   async deleteUser(id) {
     const { deleteUser, getUserList, showAlert } = this.props;
+    this.setState({
+      openDeleteDialog: false,
+      deleteId: "",
+    });
     let res = await deleteUser(id);
     if (res.success) {
       showAlert("delete user successfully");
@@ -78,7 +99,7 @@ class Users extends Component {
     } else {
       showAlert("add user failed");
     }
-    this.handleClose();
+    this.handleCreateClickClose();
   }
 
   handleInputChange = (e) => {
@@ -101,7 +122,7 @@ class Users extends Component {
                 <TableCell>updateTime</TableCell>
                 <TableCell>isAdmin</TableCell>
                 <TableCell>
-                  <Button color="primary" onClick={this.handleClickOpen}>add user</Button>
+                  <Button color="primary" onClick={this.handleCreateClickOpen}>add user</Button>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -116,7 +137,7 @@ class Users extends Component {
                   <TableCell>{user.isAdmin + ""}</TableCell>
                   <TableCell>
                     <Button color="primary" onClick={() => this.goUserdetail(user._id)}>detail</Button>
-                    <Button color="secondary" onClick={() => this.deleteUser(user._id)}>delete</Button>
+                    <Button color="secondary" onClick={() => this.handleDeleteClickOpen(user._id)}>delete</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -124,12 +145,19 @@ class Users extends Component {
           </Table>
         </Paper>
 
-        <UserCreateDialog
+        <CreateDialog
           data={this.state.user}
-          open={this.state.open}
-          handleClose={this.handleClose}
+          open={this.state.openCreateDialog}
+          handleClose={this.handleCreateClickClose}
           handleInputChange={this.handleInputChange}
           submit={() => this.submit()}
+        />
+
+        <DeleteDialog
+          open={this.state.openDeleteDialog}
+          handleClose={this.handleDeleteClickClose}
+          submit={() => this.deleteUser(this.state.deleteId)}
+          message="Do you want to delete the user?"
         />
       </div>
     );
