@@ -5,6 +5,7 @@ import { login } from "store/auth";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
+import { showAlert } from "store/alert";
 import "./index.css";
 
 class Login extends Component {
@@ -23,12 +24,12 @@ class Login extends Component {
   }
 
   async _login(state) {
-    const { login } = this.props;
+    const { login, showAlert } = this.props;
     let res = await login(state);
     if (res.success) {
       this.props.history.push("/");
     } else {
-      alert("login failed");
+      showAlert("login failed");
     }
   }
 
@@ -72,4 +73,4 @@ Login.propTypes = {
   login: PropTypes.func,
 };
 
-export default withRouter(connect(null, { login })(Login));
+export default withRouter(connect(null, { login, showAlert })(Login));

@@ -4,7 +4,6 @@ import routes from "plugins/routes";
 import logo from "assets/logo.svg";
 import Button from "@material-ui/core/Button";
 import "./index.css";
-import Alert from "components/Alert";
 
 class Layout extends Component {
   logout = () => {
@@ -36,7 +35,6 @@ class Layout extends Component {
             </ul>
           </div>
           <div className="main">
-            <Alert />
             <Switch>
               {
                 routes.map((route, index) => (

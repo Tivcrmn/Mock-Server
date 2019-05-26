@@ -6,10 +6,12 @@ import Login from "pages/Login";
 import AuthRoute from "plugins/auth";
 import { Provider } from "react-redux";
 import store from "store";
+import Alert from "components/Alert";
 
 const App = () => {
   return (
     <Provider store={store}>
+      <Alert />
       <Router>
         <Switch>
           <Route exact path="/login" component={Login}></Route>
