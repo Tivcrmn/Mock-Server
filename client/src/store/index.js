@@ -4,11 +4,13 @@ import { createLogger } from "redux-logger";
 import user from "./user";
 import auth from "./auth";
 import alert from "./alert";
+import system from "./system";
 
 const rootReducer = combineReducers({
   user,
   auth,
   alert,
+  system,
 });
 
 const middlewares = [thunk];

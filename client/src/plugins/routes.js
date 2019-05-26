@@ -3,6 +3,7 @@ import User from "pages/Users";
 import UserDetail from "pages/Users/Detail";
 import Profile from "pages/Profile";
 import Systems from "pages/Systems";
+import SystemDetail from "pages/Systems/Detail";
 import F0F from "pages/F0F";
 
 const routes = [
@@ -16,8 +17,14 @@ const routes = [
   {
     path: "/systems",
     main: Systems,
+    exact: true,
     name: "Systems",
     show: true,
+  },
+  {
+    path: "/systems/:id",
+    main: SystemDetail,
+    show: false,
   },
   {
     path: "/user",
