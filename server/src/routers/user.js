@@ -69,7 +69,7 @@ export const del = conext(async (req, res) => {
 
 export const auth = conext(async (req, res) => {
   let r = await getToken(req.headers.authorization);
-  res.send(apiResult(r ? { data: "token valid" } : { error: "token invalid" }));
+  res.send(apiResult(r ? { data: r } : { error: "token invalid" }));
 });
 
 export default {

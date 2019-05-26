@@ -4,6 +4,7 @@ import UserDetail from "pages/Users/Detail";
 import Profile from "pages/Profile";
 import Systems from "pages/Systems";
 import SystemDetail from "pages/Systems/Detail";
+import ApiDetail from "pages/Api/Detail";
 import F0F from "pages/F0F";
 
 const routes = [
@@ -24,6 +25,11 @@ const routes = [
   {
     path: "/systems/:id",
     main: SystemDetail,
+    show: false,
+  },
+  {
+    path: "/api/:id",
+    main: ApiDetail,
     show: false,
   },
   {

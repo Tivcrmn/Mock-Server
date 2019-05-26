@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 
 const ApiSchema = new Schema({
   url: { type: String },
-  system: { type: String },
   adminId: { type: String },
   method: { type: String },
+  systemId: { type: String },
   query: { type: Array, default: [] },
   fields: { type: Array, default: [] },
   version: { type: String, default: "v1" },

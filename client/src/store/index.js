@@ -5,12 +5,14 @@ import user from "./user";
 import auth from "./auth";
 import alert from "./alert";
 import system from "./system";
+import api from "./api";
 
 const rootReducer = combineReducers({
   user,
   auth,
   alert,
   system,
+  api,
 });
 
 const middlewares = [thunk];

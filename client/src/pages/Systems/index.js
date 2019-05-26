@@ -24,6 +24,7 @@ const styles = theme => {
   return {
     grid: {
       paddingLeft: `${theme.spacing.unit * 3}px!important`,
+      paddingBottom: `${theme.spacing.unit * 2}px!important`,
       color: theme.palette.text.secondary,
     },
   };

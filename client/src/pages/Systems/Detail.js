@@ -3,6 +3,7 @@ import { getSystemInfo, getSystem } from "store/system";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import ApiTable from "pages/Api";
 
 class Detail extends Component {
   componentDidMount() {
@@ -16,8 +17,11 @@ class Detail extends Component {
     return (
       <div>
         <h1>System Detail</h1>
-        <label>SystemName: </label>
-        <span>{ system.systemName }</span>
+        <div style={{ marginBottom: 20 }}>
+          <label>SystemName: </label>
+          <span >{ system.systemName }</span>
+        </div>
+        <ApiTable />
       </div>
     );
   }

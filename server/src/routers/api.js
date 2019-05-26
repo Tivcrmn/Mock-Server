@@ -3,7 +3,7 @@ import { Api } from "@/methods";
 import conext from "@/middlewares/conext";
 
 export const list = conext(async (req, res) => {
-  let apis = await Api.getByQuery({});
+  let apis = await Api.getByQuery({ systemId: req.params.systemId });
   res.send(apiResult({ data: apis }));
 });
 
@@ -14,8 +14,7 @@ export const info = conext(async (req, res) => {
 });
 
 export const create = conext(async (req, res, next) => {
-  // 这里应该先到相关的system下查，后面改
-  let api = await Api.getByName(req.body.apiName);
+  let api = await Api.getByName(req.body.url);
   if (api) {
     return res.send(apiResult({ error: "API_EXISTS" }));
   }
