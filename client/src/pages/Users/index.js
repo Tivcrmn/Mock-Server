@@ -6,7 +6,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import moment from "moment";
 import { getUsers, getUserList, addUser, deleteUser, updateUser } from "store/user";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
@@ -14,6 +13,8 @@ import CreateDialog from "./CreateDialog";
 import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
 import { withRouter } from "react-router-dom";
+import { mf } from "plugins/utils";
+import userProto from "./prototype.json";
 
 class Users extends Component {
   constructor(props) {
@@ -23,14 +24,9 @@ class Users extends Component {
       type: "create",
       openDeleteDialog: false,
       deleteId: "",
-      user: {
-        userName: "",
-        password: "",
-      },
+      user: userProto,
     };
   }
-
-  momentFormat = time => moment(time).format("MMMM Do YYYY, h:mm:ss a")
 
   componentDidMount() {
     const { getUserList } = this.props;
@@ -50,10 +46,7 @@ class Users extends Component {
   handleCreateClickClose = () => {
     this.setState({
       openCreateDialog: false,
-      user: {
-        userName: "",
-        password: "",
-      },
+      user: userProto,
     });
   }
 
@@ -77,10 +70,7 @@ class Users extends Component {
 
   async deleteUser(id) {
     const { deleteUser, getUserList, showAlert } = this.props;
-    this.setState({
-      openDeleteDialog: false,
-      deleteId: "",
-    });
+    this.handleDeleteClickClose();
     let res = await deleteUser(id);
     if (res.success) {
       showAlert("delete user successfully");
@@ -139,8 +129,8 @@ class Users extends Component {
                   <TableCell component="th" scope="row">
                     {user.userName}
                   </TableCell>
-                  <TableCell>{this.momentFormat(user.createTime)}</TableCell>
-                  <TableCell>{this.momentFormat(user.updateTime)}</TableCell>
+                  <TableCell>{mf(user.createTime)}</TableCell>
+                  <TableCell>{mf(user.updateTime)}</TableCell>
                   <TableCell>{user.isAdmin + ""}</TableCell>
                   <TableCell>
                     <Button color="default" onClick={() => this.handleCreateClickOpen("edit", user)}>edit</Button>
@@ -177,4 +167,12 @@ const mapStateToProps = state => ({
   users: getUsers(state),
 });
 
-export default withRouter(connect(mapStateToProps, { getUserList, addUser, deleteUser, showAlert, updateUser })(Users));
+const mapDispatchToProps = {
+  getUserList,
+  addUser,
+  deleteUser,
+  showAlert,
+  updateUser,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));

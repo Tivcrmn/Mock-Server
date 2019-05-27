@@ -6,12 +6,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 
-class UserCreateDialog extends Component {
+class CreateDialog extends Component {
   render() {
-    const { open, data, handleClose, submit, handleInputChange } = this.props;
+    const { open, type, data, handleClose, submit, handleInputChange } = this.props;
     return (
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add User</DialogTitle>
+        <DialogTitle>{type === "create" ? "Add" : "Edit"} User</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
@@ -43,4 +43,4 @@ class UserCreateDialog extends Component {
   }
 }
 
-export default UserCreateDialog;
+export default CreateDialog;

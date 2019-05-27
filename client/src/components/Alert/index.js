@@ -37,4 +37,8 @@ const mapStateToProps = state => ({
   message: getMessage(state),
 });
 
-export default connect(mapStateToProps, { hideAlert })(Alert);
+const mapDispatchToProps = {
+  hideAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Alert);

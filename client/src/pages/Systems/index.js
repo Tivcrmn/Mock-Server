@@ -18,6 +18,7 @@ import CreateDialog from "./CreateDialog";
 import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
 import { withRouter } from "react-router-dom";
+import systemProto from "./prototype.json";
 
 const styles = theme => {
   return {
@@ -37,9 +38,7 @@ class Systems extends Component {
       type: "create",
       openDeleteDialog: false,
       deleteId: "",
-      system: {
-        systemName: "",
-      },
+      system: systemProto,
     };
   }
 
@@ -60,9 +59,7 @@ class Systems extends Component {
   handleCreateClickClose = () => {
     this.setState({
       openCreateDialog: false,
-      system: {
-        systemName: "",
-      },
+      system: systemProto,
     });
   }
 
@@ -92,10 +89,7 @@ class Systems extends Component {
 
   async deleteSystem(id) {
     const { deleteSystem, getSystemList, showAlert } = this.props;
-    this.setState({
-      openDeleteDialog: false,
-      deleteId: "",
-    });
+    this.handleDeleteClickClose();
     let res = await deleteSystem(id);
     if (res.success) {
       showAlert("delete system successfully");
@@ -168,6 +162,7 @@ class Systems extends Component {
         </Grid>
 
         <CreateDialog
+          type={this.state.type}
           data={this.state.system}
           open={this.state.openCreateDialog}
           handleClose={this.handleCreateClickClose}
@@ -191,4 +186,12 @@ const mapStateToProps = state => ({
   currentUserId: getCurrentUser(state)._id,
 });
 
-export default withRouter(connect(mapStateToProps, { getSystemList, addSystem, showAlert, deleteSystem, updateSystem })(withStyles(styles)(Systems)));
+const mapDispatchToProps = {
+  getSystemList,
+  addSystem,
+  showAlert,
+  deleteSystem,
+  updateSystem,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Systems)));

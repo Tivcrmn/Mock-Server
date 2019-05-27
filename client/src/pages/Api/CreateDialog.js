@@ -12,10 +12,10 @@ import Select from "@material-ui/core/Select";
 
 class CreateDialog extends Component {
   render() {
-    const { open, data, handleClose, submit, handleInputChange } = this.props;
+    const { open, type, data, handleClose, submit, handleInputChange } = this.props;
     return (
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add User</DialogTitle>
+        <DialogTitle>{ type === "create" ? "Add" : "Edit" } Api</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"

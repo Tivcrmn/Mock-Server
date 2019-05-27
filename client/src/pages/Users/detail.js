@@ -26,4 +26,8 @@ const mapStateToProps = state => ({
   user: getUser(state),
 });
 
-export default withRouter(connect(mapStateToProps, { getUserInfo })(Detail));
+const mapDispatchToProps = {
+  getUserInfo,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Detail));

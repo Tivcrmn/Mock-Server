@@ -68,4 +68,9 @@ class Login extends Component {
   }
 }
 
-export default withRouter(connect(null, { login, showAlert })(Login));
+const mapDispatchToProps = {
+  login,
+  showAlert,
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(Login));

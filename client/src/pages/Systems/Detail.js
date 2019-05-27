@@ -30,4 +30,8 @@ const mapStateToProps = state => ({
   system: getSystem(state),
 });
 
-export default withRouter(connect(mapStateToProps, { getSystemInfo })(Detail));
+const mapDispatchToProps = {
+  getSystemInfo,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Detail));

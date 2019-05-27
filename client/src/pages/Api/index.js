@@ -12,10 +12,11 @@ import { getSystem } from "store/system";
 import { getCurrentUser } from "store/auth";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import moment from "moment";
 import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
 import CreateDialog from "./CreateDialog";
+import { mf } from "plugins/utils";
+import apiProto from "./prototype.json";
 
 class Api extends Component {
   constructor(props) {
@@ -26,16 +27,7 @@ class Api extends Component {
       openDeleteDialog: false,
       deleteSystemId: "",
       deleteApiId: "",
-      api: {
-        url: "",
-        adminId: "",
-        method: "",
-        systemId: "",
-        query: [],
-        fields: [],
-        version: "",
-        repeat: "",
-      },
+      api: apiProto,
     };
   }
 
@@ -44,8 +36,6 @@ class Api extends Component {
     const systemId = this.props.history.location.pathname.slice(9);
     getApiList(systemId);
   }
-
-  momentFormat = time => moment(time).format("MMMM Do YYYY, h:mm:ss a")
 
   handleCreateClickOpen = (type, api) => {
     if (!api) api = cloneDeep(this.state.api);
@@ -59,16 +49,7 @@ class Api extends Component {
   handleCreateClickClose = () => {
     this.setState({
       openCreateDialog: false,
-      api: {
-        url: "",
-        adminId: "",
-        method: "",
-        systemId: "",
-        query: [],
-        fields: [],
-        version: "",
-        repeat: "",
-      },
+      api: apiProto,
     });
   }
 
@@ -90,11 +71,7 @@ class Api extends Component {
 
   async deleteApi(systemId, apiId) {
     const { deleteApi, getApiList, showAlert } = this.props;
-    this.setState({
-      openDeleteDialog: false,
-      deleteSystemId: "",
-      deleteApiId: "",
-    });
+    this.handleDeleteClickClose();
     let res = await deleteApi(systemId, apiId);
     if (res.success) {
       showAlert("delete api successfully");
@@ -154,7 +131,7 @@ class Api extends Component {
                   <TableCell component="th" scope="row">
                     {api.url}
                   </TableCell>
-                  <TableCell>{this.momentFormat(api.createTime)}</TableCell>
+                  <TableCell>{mf(api.createTime)}</TableCell>
                   <TableCell>{api.method}</TableCell>
                   <TableCell>{api.version}</TableCell>
                   <TableCell>
@@ -194,4 +171,12 @@ const mapStateToProps = state => ({
   adminId: getCurrentUser(state)._id,
 });
 
-export default withRouter(connect(mapStateToProps, { getApiList, showAlert, deleteApi, addApi, updateApi })(Api));
+const mapDispatchToProps = {
+  getApiList,
+  showAlert,
+  deleteApi,
+  addApi,
+  updateApi,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Api));
