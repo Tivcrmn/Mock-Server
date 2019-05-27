@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getUserInfo, getUser } from "store/user";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 class Detail extends Component {
@@ -22,11 +21,6 @@ class Detail extends Component {
     );
   }
 }
-
-Detail.propTypes = {
-  getUserInfo: PropTypes.func,
-  user: PropTypes.object,
-};
 
 const mapStateToProps = state => ({
   user: getUser(state),

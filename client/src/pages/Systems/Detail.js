@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getSystemInfo, getSystem } from "store/system";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import ApiTable from "pages/Api";
 
@@ -26,11 +25,6 @@ class Detail extends Component {
     );
   }
 }
-
-Detail.propTypes = {
-  getSystemInfo: PropTypes.func,
-  system: PropTypes.object,
-};
 
 const mapStateToProps = state => ({
   system: getSystem(state),

@@ -10,7 +10,6 @@ import moment from "moment";
 import { getUsers, getUserList, addUser, deleteUser, updateUser } from "store/user";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import CreateDialog from "./CreateDialog";
 import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
@@ -173,15 +172,6 @@ class Users extends Component {
     );
   }
 }
-
-Users.propTypes = {
-  getUserList: PropTypes.func,
-  addUser: PropTypes.func,
-  deleteUser: PropTypes.func,
-  users: PropTypes.array,
-  showAlert: PropTypes.func,
-  updateUser: PropTypes.func,
-};
 
 const mapStateToProps = state => ({
   users: getUsers(state),

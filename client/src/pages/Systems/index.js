@@ -14,7 +14,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { getCurrentUser } from "store/auth";
 import { showAlert } from "store/alert";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import CreateDialog from "./CreateDialog";
 import DeleteDialog from "components/DeleteDialog";
 import { cloneDeep } from "lodash";
@@ -186,11 +185,6 @@ class Systems extends Component {
     );
   }
 }
-
-Systems.propTypes = {
-  getSystemList: PropTypes.func,
-  systems: PropTypes.array,
-};
 
 const mapStateToProps = state => ({
   systems: getSystems(state),

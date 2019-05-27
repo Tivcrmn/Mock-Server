@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Redirect, withRouter } from "react-router-dom";
 import { tokenAuth, getRedirect } from "store/auth";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Loading from "components/Loading";
 
@@ -49,13 +48,6 @@ class AuthRoute extends Component {
     );
   }
 }
-
-AuthRoute.propTypes = {
-  component: PropTypes.any,
-  tokenAuth: PropTypes.func,
-  redirect: PropTypes.bool,
-  getDoShowLoading: PropTypes.func,
-};
 
 const mapStateToProps = state => ({
   redirect: getRedirect(state),

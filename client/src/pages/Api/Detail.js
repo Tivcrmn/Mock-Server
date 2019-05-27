@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { getApiInfo, getApi } from "store/api";
 import { getSystem } from "store/system";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 class Detail extends Component {
@@ -35,11 +34,6 @@ class Detail extends Component {
     );
   }
 }
-
-Detail.propTypes = {
-  getApiInfo: PropTypes.func,
-  api: PropTypes.object,
-};
 
 const mapStateToProps = state => ({
   api: getApi(state),

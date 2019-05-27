@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { login } from "store/auth";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -68,9 +67,5 @@ class Login extends Component {
     );
   }
 }
-
-Login.propTypes = {
-  login: PropTypes.func,
-};
 
 export default withRouter(connect(null, { login, showAlert })(Login));
