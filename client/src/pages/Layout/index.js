@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-
 import routes from "plugins/routes";
 import logo from "assets/logo.svg";
 import Button from "@material-ui/core/Button";
-import "./index.css";
+import "./index.scss";
 
 class Layout extends Component {
   logout = () => {
@@ -12,10 +12,10 @@ class Layout extends Component {
 
   render() {
     return (
-      <div className="Main">
+      <div className="layout">
         <Router>
-          <div id="navigation">
-            <img src={logo} className="Main-logo" alt="logo" />
+          <div className="navigation">
+            <img src={logo} className="logo" alt="logo" />
             <ul>
               {
                 routes.filter(route => route.show).map((route, index) => (

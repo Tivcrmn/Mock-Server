@@ -5,7 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
 import { showAlert } from "store/alert";
-import "./index.css";
 
 class Login extends Component {
   constructor(props) {
@@ -34,7 +33,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-page">
+      <div style={{ textAlign: "center", paddingTop: 200 }}>
         <h2>Mock Server</h2>
         <div>
           <TextField

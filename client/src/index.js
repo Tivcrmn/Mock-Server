@@ -7,6 +7,7 @@ import AuthRoute from "plugins/auth";
 import { Provider } from "react-redux";
 import store from "store";
 import Alert from "components/Alert";
+import "./index.scss";
 
 const App = () => {
   return (
