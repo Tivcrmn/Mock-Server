@@ -3,6 +3,14 @@ Mock Server
 
 ### How to run
 
+### Redis in GCP
+1. start the vm
+2. open the ssh window
+3. run "redis-server" in one window
+4. run "redis-cli" in another window
+5. type "CONFIG SET protected-mode no" to disable protected-mode
+6. type "CONFIG SET requirepass password" to set password
+
 #### Client
 ```bash
 cd client/

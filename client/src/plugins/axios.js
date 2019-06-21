@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const async = ({ dispatch, url, method, data, headers, success, fail }) => {
+const axiosWrapper = ({ dispatch, url, method, data, headers, success, fail }) => {
   let reqObj = {};
   if (method) {
     reqObj = {
@@ -8,7 +8,7 @@ const async = ({ dispatch, url, method, data, headers, success, fail }) => {
       url,
       data,
       baseURL: "http://127.0.0.1:5000/",
-      headers: { ...headers, "Content-Type": "application/json" },
+      headers: { ...headers, "Content-Type": "application/json", "Authorization": localStorage.getItem("token") },
     };
   }
   axios(reqObj).then(res => {
@@ -16,6 +16,10 @@ const async = ({ dispatch, url, method, data, headers, success, fail }) => {
     if (response.success) {
       success && success(response);
     } else {
+      if (response.error === "ACCESS_DENIED") {
+        alert("the token expired, please refresh the page and login again");
+        return;
+      }
       fail && fail(response);
     }
   }).catch(() => {
@@ -24,4 +28,4 @@ const async = ({ dispatch, url, method, data, headers, success, fail }) => {
   });
 };
 
-export default async;
+export default axiosWrapper;
