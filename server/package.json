@@ -25,7 +25,7 @@
     "ioredis": "^3.1.4",
     "log4js": "^4.1.0",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.9"
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
